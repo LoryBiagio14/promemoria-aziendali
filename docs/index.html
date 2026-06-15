@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Promemoria Aziendali</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>emailjs.init('2We7B2WIXlO-M0EVF');</script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; color: #333; }
@@ -981,14 +983,35 @@ function checkReminders() {
       notified.push(e.id);
       localStorage.setItem('pa_notified', JSON.stringify(notified));
 
-      // Segna come inviato
-      const allEvents = getEvents();
-      const idx = allEvents.findIndex(ev => ev.id === e.id);
-      if (idx !== -1) {
-        allEvents[idx].reminder_sent = true;
-        saveEvents(allEvents);
-      }
+      // Invia email
+      sendReminderEmail(e);
     }
+  });
+}
+
+// Invia email tramite EmailJS
+function sendReminderEmail(event) {
+  emailjs.send('1324', '1324', {
+    collaboratore: event.collaborator_name,
+    titolo: event.title,
+    descrizione: event.description || 'Nessuna nota',
+    data: formatDate(event.event_date),
+    ora: event.event_time,
+    to_email: event.collaborator_email,
+  }).then(function() {
+    console.log('Email inviata a ' + event.collaborator_email);
+    // Segna come inviato
+    const events = getEvents();
+    const idx = events.findIndex(e => e.id === event.id);
+    if (idx !== -1) {
+      events[idx].reminder_sent = true;
+      saveEvents(events);
+      renderEvents();
+      renderDashboard();
+      checkTodayReminders();
+    }
+  }).catch(function(err) {
+    console.error('Errore invio email:', err);
   });
 }
 
