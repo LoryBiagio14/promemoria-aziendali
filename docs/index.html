@@ -200,9 +200,12 @@
       <label>Password</label>
       <input type="password" id="login-pass" placeholder="Inserisci password" onkeydown="if(event.key==='Enter') doLogin()" />
     </div>
+    <div class="form-group">
+      <label>Spazio di lavoro</label>
+      <select id="login-workspace"><option value="">Caricamento...</option></select>
+    </div>
     <button class="btn btn-primary" onclick="doLogin()">Accedi</button>
     <div class="error-msg" id="login-error"></div>
-    <div class="demo-hint">Demo: admin / admin123 &nbsp;|&nbsp; marco / marco123</div>
   </div>
 </div>
 
@@ -460,9 +463,10 @@ let usersCache = [];
 function getUsers() { return usersCache; }
 function saveUsers(u) { usersCache = u; }
 
-async function loadUsersFromSupabase() {
+async function loadUsersFromSupabase(workspaceId) {
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/users?select=*`, { headers: sbHeaders() });
+    const wsId = workspaceId || currentWorkspace || 1;
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/users?select=*&workspace_id=eq.${wsId}`, { headers: sbHeaders() });
     const data = await res.json();
     if (Array.isArray(data)) usersCache = data;
   } catch(err) { console.error('Errore caricamento utenti:', err); }
@@ -507,7 +511,8 @@ function sbHeaders() {
 
 async function loadEventsFromSheets() {
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/events?select=*&order=event_date.asc`, { headers: sbHeaders() });
+    const wsId = currentWorkspace || 1;
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/events?select=*&workspace_id=eq.${wsId}&order=event_date.asc`, { headers: sbHeaders() });
     const data = await res.json();
     if (Array.isArray(data)) {
       eventsCache = data.map(e => ({ ...e, reminder_sent: !!e.reminder_sent }));
@@ -557,12 +562,24 @@ function getCurrentUser() {
 // AUTH
 // ============================================================
 let currentUser = null;
+let currentWorkspace = null;
+
+async function loadWorkspaces() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/workspaces?select=*&order=name.asc`, { headers: sbHeaders() });
+    const data = await res.json();
+    const sel = document.getElementById('login-workspace');
+    sel.innerHTML = data.map(w => `<option value="${w.id}">${w.name}</option>`).join('');
+    return data;
+  } catch(err) { console.error('Errore caricamento workspace:', err); return []; }
+}
 
 async function doLogin() {
   const username = document.getElementById('login-user').value.trim();
   const password = document.getElementById('login-pass').value;
+  const workspaceId = parseInt(document.getElementById('login-workspace').value);
   document.getElementById('login-error').textContent = 'Accesso in corso...';
-  await loadUsersFromSupabase();
+  await loadUsersFromSupabase(workspaceId);
   const users = getUsers();
   const user = users.find(u => u.username === username && u.password === password);
   if (!user) {
@@ -570,10 +587,13 @@ async function doLogin() {
     return;
   }
   currentUser = user;
+  currentWorkspace = workspaceId;
   sessionStorage.setItem('pa_current', JSON.stringify(user));
+  sessionStorage.setItem('pa_workspace', String(workspaceId));
   document.getElementById('login-page').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  document.getElementById('topbar-username').textContent = '👤 ' + user.name;
+  const wsName = document.getElementById('login-workspace').options[document.getElementById('login-workspace').selectedIndex].text;
+  document.getElementById('topbar-username').textContent = '👤 ' + user.name + ' — ' + wsName;
   if (user.role === 'admin') {
     document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'block');
   }
@@ -848,7 +868,8 @@ function saveEvent() {
       event_date: date, event_time: time,
       reminder_datetime: reminder || '',
       reminder_sent: false,
-      created_by: currentUser ? currentUser.username : ''
+      created_by: currentUser ? currentUser.username : '',
+      workspace_id: currentWorkspace || 1
     };
     saveEventToSheets(newEvent).then(() => loadEventsFromSheets().then(() => { renderEvents(); renderDashboard(); }));
     closeEventModal();
@@ -1160,6 +1181,10 @@ window.onload = function() {
   setInterval(checkTodayReminders, 60000);
   }
 };
+
+// Carica workspace al caricamento pagina
+loadWorkspaces();
+
 </script>
 </body>
 </html>
