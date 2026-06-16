@@ -1073,8 +1073,7 @@ function checkReminders() {
       notified.push(e.id);
       localStorage.setItem('pa_notified', JSON.stringify(notified));
 
-      // Invia email
-      sendReminderEmail(e);
+      // Email gestita da Supabase Edge Function
     }
   });
 }
