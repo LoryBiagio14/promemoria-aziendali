@@ -454,6 +454,11 @@ function daysFromNow(n) {
 // ============================================================
 // STORAGE
 // ============================================================
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCZ9TbdUBW5Pf7MAdXkaKfW2QDa61oymMfaWyRCGB3J_zl0UccmRub-QhWLIx9WT-Q/exec';
+const SHEET_ID = '1x5hEjNCiLj1xxI07sC8Xxv89YFQYeTJf7PJexkURD0M';
+
+let eventsCache = [];
+
 function getUsers() {
   const s = localStorage.getItem('pa_users');
   return s ? JSON.parse(s) : DEFAULT_USERS;
@@ -461,10 +466,46 @@ function getUsers() {
 function saveUsers(u) { localStorage.setItem('pa_users', JSON.stringify(u)); }
 
 function getEvents() {
-  const s = localStorage.getItem('pa_events');
-  return s ? JSON.parse(s) : DEFAULT_EVENTS;
+  return eventsCache;
 }
-function saveEvents(e) { localStorage.setItem('pa_events', JSON.stringify(e)); }
+function saveEvents(e) { eventsCache = e; }
+
+async function loadEventsFromSheets() {
+  try {
+    const url = `${SCRIPT_URL}?action=getEvents&sheetId=${SHEET_ID}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.events) {
+      eventsCache = data.events.map(e => ({
+        ...e,
+        id: Number(e.id),
+        reminder_sent: e.reminder_sent === true || e.reminder_sent === 'true' || e.reminder_sent === 'TRUE'
+      }));
+    }
+  } catch(err) {
+    console.error('Errore caricamento sheet:', err);
+    const s = localStorage.getItem('pa_events');
+    eventsCache = s ? JSON.parse(s) : DEFAULT_EVENTS;
+  }
+}
+
+async function saveEventToSheets(event) {
+  try {
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'saveEvent', event, sheetId: SHEET_ID })
+    });
+  } catch(err) { console.error('Errore salvataggio sheet:', err); }
+}
+
+async function deleteEventFromSheets(id) {
+  try {
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'deleteEvent', id: String(id), sheetId: SHEET_ID })
+    });
+  } catch(err) { console.error('Errore eliminazione sheet:', err); }
+}
 
 function getCurrentUser() {
   const s = sessionStorage.getItem('pa_current');
@@ -526,10 +567,10 @@ function showPage(name) {
 // ============================================================
 // INIT
 // ============================================================
-function initApp() {
-  // Inizializza storage se vuoto
+async function initApp() {
   if (!localStorage.getItem('pa_users')) saveUsers(DEFAULT_USERS);
-  if (!localStorage.getItem('pa_events')) saveEvents(DEFAULT_EVENTS);
+  document.getElementById('stats-grid').innerHTML = '<p style="padding:16px;color:#888">Caricamento eventi...</p>';
+  await loadEventsFromSheets();
   populateCollabFilter();
   populateMonthFilter();
   renderDashboard();
@@ -770,6 +811,8 @@ function saveEvent() {
   }
 
   saveEvents(events);
+  const savedEvent = editingEventId ? events.find(e => e.id === editingEventId) : events[events.length-1];
+  saveEventToSheets(savedEvent);
   closeEventModal();
   populateCollabFilter();
   populateMonthFilter();
@@ -780,6 +823,7 @@ function deleteEvent(id) {
   if (!confirm('Eliminare questo evento?')) return;
   const events = getEvents().filter(e => e.id !== id);
   saveEvents(events);
+  deleteEventFromSheets(id);
   populateCollabFilter();
   populateMonthFilter();
   renderEvents();
@@ -1015,6 +1059,7 @@ function sendReminderEmail(event) {
     if (idx !== -1) {
       events[idx].reminder_sent = true;
       saveEvents(events);
+      saveEventToSheets(events[idx]);
       renderEvents();
       renderDashboard();
       checkTodayReminders();
