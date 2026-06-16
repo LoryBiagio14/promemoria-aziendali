@@ -415,11 +415,7 @@
 // ============================================================
 // DATI INIZIALI
 // ============================================================
-const DEFAULT_USERS = [
-  { id: 1, username: 'admin', password: 'admin123', name: 'Amministratore', role: 'admin' },
-  { id: 2, username: 'marco', password: 'marco123', name: 'Marco Bianchi', role: 'user' },
-  { id: 3, username: 'giulia', password: 'giulia123', name: 'Giulia Verdi', role: 'user' },
-];
+const DEFAULT_USERS = [];
 
 const DEFAULT_EVENTS = [
   {
@@ -459,11 +455,42 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 let eventsCache = [];
 
-function getUsers() {
-  const s = localStorage.getItem('pa_users');
-  return s ? JSON.parse(s) : DEFAULT_USERS;
+let usersCache = [];
+
+function getUsers() { return usersCache; }
+function saveUsers(u) { usersCache = u; }
+
+async function loadUsersFromSupabase() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/users?select=*`, { headers: sbHeaders() });
+    const data = await res.json();
+    if (Array.isArray(data)) usersCache = data;
+  } catch(err) { console.error('Errore caricamento utenti:', err); }
 }
-function saveUsers(u) { localStorage.setItem('pa_users', JSON.stringify(u)); }
+
+async function saveUserToSupabase(user) {
+  try {
+    if (user.id) {
+      const { id, created_at, ...rest } = user;
+      await fetch(`${SUPABASE_URL}/rest/v1/users?id=eq.${id}`, {
+        method: 'PATCH', headers: sbHeaders(), body: JSON.stringify(rest)
+      });
+    } else {
+      const { id, created_at, ...rest } = user;
+      await fetch(`${SUPABASE_URL}/rest/v1/users`, {
+        method: 'POST', headers: sbHeaders(), body: JSON.stringify(rest)
+      });
+    }
+  } catch(err) { console.error('Errore salvataggio utente:', err); }
+}
+
+async function deleteUserFromSupabase(id) {
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/users?id=eq.${id}`, {
+      method: 'DELETE', headers: sbHeaders()
+    });
+  } catch(err) { console.error('Errore eliminazione utente:', err); }
+}
 
 function getEvents() {
   return eventsCache;
@@ -531,9 +558,11 @@ function getCurrentUser() {
 // ============================================================
 let currentUser = null;
 
-function doLogin() {
+async function doLogin() {
   const username = document.getElementById('login-user').value.trim();
   const password = document.getElementById('login-pass').value;
+  document.getElementById('login-error').textContent = 'Accesso in corso...';
+  await loadUsersFromSupabase();
   const users = getUsers();
   const user = users.find(u => u.username === username && u.password === password);
   if (!user) {
@@ -582,9 +611,8 @@ function showPage(name) {
 // INIT
 // ============================================================
 async function initApp() {
-  if (!localStorage.getItem('pa_users')) saveUsers(DEFAULT_USERS);
-  document.getElementById('stats-grid').innerHTML = '<p style="padding:16px;color:#888">Caricamento eventi...</p>';
-  await loadEventsFromSheets();
+  document.getElementById('stats-grid').innerHTML = '<p style="padding:16px;color:#888">Caricamento...</p>';
+  await Promise.all([loadUsersFromSupabase(), loadEventsFromSheets()]);
   populateCollabFilter();
   populateMonthFilter();
   renderDashboard();
