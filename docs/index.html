@@ -832,6 +832,7 @@ function renderRecurring() {
       <td style="font-size:13px">${giorni}</td>
       <td><span class="badge ${r.active ? 'badge-success' : 'badge-warning'}">${r.active ? 'Attiva' : 'Pausa'}</span></td>
       <td style="display:flex;gap:6px">
+        <button class="btn btn-outline btn-sm" onclick="testRecurring(${r.id})">Test</button>
         <button class="btn btn-outline btn-sm" onclick="toggleRecurring(${r.id},${!r.active})">${r.active ? 'Pausa' : 'Riattiva'}</button>
         <button class="btn btn-outline btn-sm" onclick="editRecurring(${r.id})">Modifica</button>
         <button class="btn btn-danger btn-sm" onclick="deleteRecurring(${r.id})">Elimina</button>
@@ -915,29 +916,47 @@ function editRecurring(id) {
   document.getElementById('recurring-modal').classList.add('open');
 }
 
+async function sendRecurringEmail(r) {
+  await emailjs.send('1324', 'template_50vus3s', {
+    to_email: r.email,
+    collaboratore: r.email,
+    titolo: r.title,
+    descrizione: r.message || r.title,
+    data: 'Notifica ricorrente',
+    ora: r.time
+  });
+}
+
+async function testRecurring(id) {
+  const r = recurringData.find(x => x.id === id);
+  if (!r) return;
+  try {
+    await sendRecurringEmail(r);
+    alert('Email di test inviata a ' + r.email);
+  } catch(e) {
+    alert('Errore invio: ' + (e.text || e.message || JSON.stringify(e)));
+    console.error('Test recurring error:', e);
+  }
+}
+
 async function checkRecurringReminders() {
-  if (!recurringData.length) return;
+  if (!recurringData.length) { console.log('[Recurring] nessun dato caricato'); return; }
   const now = new Date();
   const dayOfWeek = now.getDay();
   const currentTime = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  console.log('[Recurring] check ore', currentTime, '- reminders:', recurringData.length);
   for (const r of recurringData) {
-    if (!r.active) continue;
-    if (r.time !== currentTime) continue;
+    if (!r.active) { console.log('[Recurring] skip (inattivo):', r.title); continue; }
+    if (r.time !== currentTime) { console.log('[Recurring] skip (orario diverso):', r.title, r.time, '!=', currentTime); continue; }
     const days = (r.days || '0,1,2,3,4,5,6').split(',').map(Number);
-    if (!days.includes(dayOfWeek)) continue;
+    if (!days.includes(dayOfWeek)) { console.log('[Recurring] skip (giorno diverso):', r.title); continue; }
     const lastKey = `rec_sent_${r.id}_${now.toDateString()}_${currentTime}`;
-    if (sessionStorage.getItem(lastKey)) continue;
+    if (sessionStorage.getItem(lastKey)) { console.log('[Recurring] skip (già inviato oggi):', r.title); continue; }
     sessionStorage.setItem(lastKey, '1');
     try {
-      await emailjs.send('1324', 'template_50vus3s', {
-        to_email: r.email,
-        collaboratore: r.email,
-        titolo: r.title,
-        descrizione: r.message || r.title,
-        data: 'Notifica ricorrente',
-        ora: r.time
-      });
-    } catch(e) { console.error('Errore notifica ricorrente:', e); }
+      await sendRecurringEmail(r);
+      console.log('[Recurring] inviata:', r.title, '->', r.email);
+    } catch(e) { console.error('[Recurring] errore invio:', r.title, e); }
   }
 }
 
