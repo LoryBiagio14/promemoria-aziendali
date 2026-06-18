@@ -931,11 +931,11 @@ async function checkRecurringReminders() {
     try {
       await emailjs.send('1324', 'template_50vus3s', {
         to_email: r.email,
-        to_name: r.email,
-        event_title: r.title,
-        event_date: 'Notifica ricorrente',
-        event_time: r.time,
-        reminder_message: r.message || r.title
+        collaboratore: r.email,
+        titolo: r.title,
+        descrizione: r.message || r.title,
+        data: 'Notifica ricorrente',
+        ora: r.time
       });
     } catch(e) { console.error('Errore notifica ricorrente:', e); }
   }
@@ -964,7 +964,7 @@ function showPage(name) {
 async function initApp() {
   document.getElementById('stats-grid').innerHTML = '<p style="padding:16px;color:#888">Caricamento...</p>';
   await Promise.all([loadUsersFromSupabase(), loadEventsFromSheets()]);
-  loadRecurring();
+  await loadRecurring();
   populateCollabFilter();
   populateMonthFilter();
   renderDashboard();
@@ -1521,6 +1521,7 @@ window.onload = function() {
     checkTodayReminders();
     setInterval(checkTodayReminders, 60000);
     setInterval(checkRecurringReminders, 60000);
+    checkRecurringReminders();
   }
 };
 
