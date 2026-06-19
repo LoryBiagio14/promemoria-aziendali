@@ -1655,16 +1655,24 @@ function deleteUser(id) {
 // EXPORT CSV
 // ============================================================
 function exportCSV() {
+  const q = v => '"' + String(v || '').replace(/"/g, '""') + '"';
   const events = getEvents();
-  const headers = ['Collaboratore','Email','Titolo','Descrizione','Data','Ora','Promemoria','Stato Promemoria'];
+  const headers = ['Collaboratore','Email','Titolo','Descrizione','Note','Data','Ora','Promemoria','Stato Promemoria','Creato da','Allegato'];
   const rows = events.map(e => [
-    e.collaborator_name, e.collaborator_email, e.title,
-    (e.description || '').replace(/,/g, ';'),
-    formatDate(e.event_date), e.event_time,
-    e.reminder_datetime ? formatDateTime(e.reminder_datetime) : '',
-    e.reminder_datetime ? (e.reminder_sent ? 'Inviato' : 'In attesa') : 'Nessuno'
+    q(e.collaborator_name),
+    q(e.collaborator_email),
+    q(e.title),
+    q(e.description),
+    q(e.notes),
+    q(formatDate(e.event_date)),
+    q(e.event_time),
+    q(e.reminder_datetime ? formatDateTime(e.reminder_datetime) : ''),
+    q(e.reminder_datetime ? (e.reminder_sent ? 'Inviato' : 'In attesa') : 'Nessuno'),
+    q(e.created_by_name || e.created_by),
+    q(e.file_url || '')
   ]);
-  const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+  const sep = ';';
+  const csv = [headers.map(q), ...rows].map(r => r.join(sep)).join('\r\n');
   const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
