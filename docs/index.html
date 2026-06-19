@@ -1306,7 +1306,13 @@ async function loadEventsFromSheets() {
   try {
     const wsId = currentWorkspace || parseInt(sessionStorage.getItem('pa_workspace') || '0');
     const wsFilter = wsId ? `&workspace_id=eq.${wsId}` : '';
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/events?select=*${wsFilter}&order=event_date.asc`, { headers: sbHeaders() });
+    const url = `${SUPABASE_URL}/rest/v1/events?select=*${wsFilter}&order=event_date.asc`;
+    const res = await fetch(url, { headers: sbHeaders() });
+    if (!res.ok) {
+      const errBody = await res.text();
+      console.error('Errore caricamento eventi:', res.status, url, errBody);
+      return;
+    }
     const data = await res.json();
     if (Array.isArray(data)) {
       eventsCache = data.map(e => ({ ...e, reminder_sent: !!e.reminder_sent }));
