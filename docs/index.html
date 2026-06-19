@@ -4,8 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Promemoria Aziendali</title>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<script>emailjs.init('2We7B2WIXlO-M0EVF');</script>
+<script>
+  const EDGE_URL = 'https://romapyverjkivxdbgdrw.supabase.co/functions/v1/check-recurring';
+  const EDGE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvbWFweXZlcmpraXZ4ZGJnZHJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NzgxMjYsImV4cCI6MjA5NzE1NDEyNn0.v3Z8qG16ztVWpCktQjuOHwhrSehaE0Lmb_KbsyHh-H8';
+  async function sendViaEdge(payload) {
+    const res = await fetch(EDGE_URL, {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + EDGE_ANON, 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Errore invio');
+    return data;
+  }
+</script>
 <style>
   :root { --gold:#d4a843; --dark:#1a1a1a; --bg:#f0ede8; --white:#ffffff; --border:#e8e4de; --muted:#999; --mid:#555; --radius:12px; --rsm:8px; }
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -788,7 +800,7 @@ async function sendContactEmail(nameId, emailId, msgId, resultId) {
   if (!name || !email || !message) { resultEl.textContent = 'Compila tutti i campi'; resultEl.style.color = '#c62828'; return; }
   resultEl.textContent = 'Invio in corso...'; resultEl.style.color = '#999';
   try {
-    await emailjs.send('1324', 'template_mca412n', { from_name: name, from_email: email, message });
+    await sendViaEdge({ type: 'contact', from_name: name, from_email: email, message });
     resultEl.textContent = 'Messaggio inviato! Ti risponderemo presto.'; resultEl.style.color = '#2e7d32';
     document.getElementById(nameId).value = '';
     document.getElementById(emailId).value = '';
@@ -917,14 +929,7 @@ function editRecurring(id) {
 }
 
 async function sendRecurringEmail(r) {
-  await emailjs.send('1324', 'template_50vus3s', {
-    to_email: r.email,
-    collaboratore: r.email,
-    titolo: r.title,
-    descrizione: r.message || r.title,
-    data: 'Notifica ricorrente',
-    ora: r.time
-  });
+  await sendViaEdge({ type: 'event', to_email: r.email, to_name: r.email, titolo: r.title, descrizione: r.message || r.title, data: 'Notifica ricorrente', ora: r.time });
 }
 
 async function testRecurring(id) {
@@ -1463,18 +1468,18 @@ function sendManualReminder(id) {
   alert('Email inviata a ' + e.collaborator_email);
 }
 
-// Invia email tramite EmailJS
+// Invia email tramite Edge Function (Brevo)
 function sendReminderEmail(event) {
-  emailjs.send('1324', 'template_50vus3s', {
-    collaboratore: event.collaborator_name,
+  sendViaEdge({
+    type: 'event',
+    to_email: event.collaborator_email,
+    to_name: event.collaborator_name,
     titolo: event.title,
     descrizione: event.description || 'Nessuna nota',
     data: formatDate(event.event_date),
-    ora: event.event_time,
-    to_email: event.collaborator_email,
+    ora: event.event_time
   }).then(function() {
     console.log('Email inviata a ' + event.collaborator_email);
-    // Segna come inviato
     const events = getEvents();
     const idx = events.findIndex(e => e.id === event.id);
     if (idx !== -1) {
