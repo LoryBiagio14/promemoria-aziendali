@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Promemoria Aziendali</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
   const EDGE_URL = 'https://romapyverjkivxdbgdrw.supabase.co/functions/v1/check-recurring';
   const EDGE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvbWFweXZlcmpraXZ4ZGJnZHJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NzgxMjYsImV4cCI6MjA5NzE1NDEyNn0.v3Z8qG16ztVWpCktQjuOHwhrSehaE0Lmb_KbsyHh-H8';
@@ -139,8 +141,10 @@
   .cal-day.other-month { background:#faf8f5; opacity:0.5; }
   .cal-day-num { font-size:13px; font-weight:700; color:var(--dark); margin-bottom:3px; }
   .cal-day.today .cal-day-num { color:var(--gold); }
-  .cal-event { background:var(--dark); color:var(--white); font-size:10px; padding:2px 5px; border-radius:4px; margin-bottom:2px; cursor:pointer; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .cal-event { background:var(--dark); color:var(--white); font-size:10px; padding:2px 5px; border-radius:4px; margin-bottom:2px; cursor:grab; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .cal-event.sent { background:var(--gold); color:var(--dark); }
+  .cal-event:active { cursor:grabbing; }
+  .cal-day.drag-over { background:#fdf0d5; border-color:var(--gold); border-style:dashed; }
 
   .empty-state { text-align:center; padding:48px; color:var(--muted); font-size:15px; }
   .search-highlight { background:#fff8e1; }
@@ -483,6 +487,7 @@
           </div>
           <h2 id="cal-title" class="calendar-month"></h2>
           <button class="btn btn-outline btn-sm" onclick="calToday()">Oggi</button>
+          <button class="btn btn-outline btn-sm" onclick="exportCalendarPDF()" title="Esporta PDF">📄 PDF</button>
         </div>
         <div class="calendar-grid" id="cal-grid"></div>
       </div>
@@ -597,10 +602,17 @@
       <input type="datetime-local" id="ev-reminder">
       <small style="color:#888;font-size:12px">Lascia vuoto per nessun promemoria</small>
     </div>
+    <div class="form-group">
+      <label>Note aggiuntive</label>
+      <textarea id="ev-notes" rows="2" placeholder="Note interne, riferimenti..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Allegato</label>
+      <input type="file" id="ev-file" style="padding:10px;font-size:14px">
+      <div id="ev-file-current" style="font-size:13px;color:var(--gold);margin-top:6px"></div>
+    </div>
     <div class="form-group" id="ev-reminder-sent-group" style="display:none">
-      <label>
-        <input type="checkbox" id="ev-reminder-sent"> Promemoria già inviato
-      </label>
+      <label><input type="checkbox" id="ev-reminder-sent"> Promemoria già inviato</label>
     </div>
     <div class="error-msg" id="event-error"></div>
     <div class="modal-actions">
@@ -1283,6 +1295,8 @@ function renderEvents() {
       <td>
         <div style="font-weight:500">${e.title}</div>
         ${e.description ? `<div style="font-size:12px;color:#888;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.description}</div>` : ''}
+        ${e.file_url ? `<div style="font-size:11px;margin-top:2px">📎 <a href="${e.file_url}" target="_blank" style="color:var(--gold)">${e.file_name || 'Allegato'}</a></div>` : ''}
+        ${e.notes ? `<div style="font-size:11px;color:#777;margin-top:2px;font-style:italic">${e.notes}</div>` : ''}
       </td>
       <td>${formatDate(e.event_date)}</td>
       <td>${e.event_time}</td>
@@ -1343,6 +1357,10 @@ function openEventModal(id = null) {
     document.getElementById('ev-reminder').value = e.reminder_datetime ? e.reminder_datetime.substring(0,16) : '';
     document.getElementById('ev-reminder-sent-group').style.display = 'block';
     document.getElementById('ev-reminder-sent').checked = e.reminder_sent;
+    document.getElementById('ev-notes').value = e.notes || '';
+    document.getElementById('ev-file').value = '';
+    const fc = document.getElementById('ev-file-current');
+    fc.innerHTML = e.file_name ? `📎 <a href="${e.file_url}" target="_blank">${e.file_name}</a>` : '';
   } else {
     document.getElementById('event-modal-title').textContent = 'Nuovo evento';
     document.getElementById('ev-collab-name').value = '';
@@ -1354,6 +1372,9 @@ function openEventModal(id = null) {
     document.getElementById('ev-reminder').value = '';
     document.getElementById('ev-reminder-sent-group').style.display = 'none';
     document.getElementById('ev-reminder-sent').checked = false;
+    document.getElementById('ev-notes').value = '';
+    document.getElementById('ev-file').value = '';
+    document.getElementById('ev-file-current').innerHTML = '';
   }
   document.getElementById('event-modal').classList.add('open');
 }
@@ -1363,7 +1384,7 @@ function closeEventModal() {
   editingEventId = null;
 }
 
-function saveEvent() {
+async function saveEvent() {
   const selVal = document.getElementById('ev-collab-select').value;
   if (selVal) { const u = JSON.parse(selVal); document.getElementById('ev-collab-name').value = u.name; document.getElementById('ev-collab-email').value = u.email; }
   const name = document.getElementById('ev-collab-name').value.trim();
@@ -1380,6 +1401,12 @@ function saveEvent() {
   const events = getEvents();
   const reminder = document.getElementById('ev-reminder').value;
   const reminderSent = document.getElementById('ev-reminder-sent').checked;
+  const notes = document.getElementById('ev-notes').value;
+  const fileInput = document.getElementById('ev-file');
+  let fileData = {};
+  if (fileInput.files && fileInput.files[0]) {
+    fileData = await uploadEventFile(fileInput.files[0]);
+  }
 
   if (editingEventId) {
     const idx = events.findIndex(e => e.id === editingEventId);
@@ -1389,7 +1416,9 @@ function saveEvent() {
       title, description: document.getElementById('ev-desc').value,
       event_date: date, event_time: time,
       reminder_datetime: reminder || '',
-      reminder_sent: reminderSent
+      reminder_sent: reminderSent,
+      notes,
+      ...(fileData.file_url ? fileData : {})
     };
     saveEvents(events);
     saveEventToSheets(events[idx]);
@@ -1400,6 +1429,8 @@ function saveEvent() {
       event_date: date, event_time: time,
       reminder_datetime: reminder || '',
       reminder_sent: false,
+      notes,
+      ...fileData,
       created_by: currentUser ? currentUser.username : '',
       created_by_name: currentUser ? (currentUser.name || currentUser.username) : '',
       workspace_id: currentWorkspace || parseInt(sessionStorage.getItem('pa_workspace') || '1')
@@ -1416,6 +1447,18 @@ function saveEvent() {
   populateCollabFilter();
   populateMonthFilter();
   renderEvents();
+}
+
+async function uploadEventFile(file) {
+  const path = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/event-files/${path}`, {
+    method: 'POST',
+    headers: { ...sbHeaders(), 'Content-Type': file.type || 'application/octet-stream' },
+    body: file
+  });
+  if (!res.ok) { console.error('Upload fallito', await res.text()); return {}; }
+  const file_url = `${SUPABASE_URL}/storage/v1/object/public/event-files/${path}`;
+  return { file_url, file_name: file.name };
 }
 
 function deleteEvent(id) {
@@ -1455,10 +1498,17 @@ function renderCalendar() {
     const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const dayEvents = events.filter(e => e.event_date === dateStr);
     const isToday = dateStr === today;
-    html += `<div class="cal-day${isToday ? ' today' : ''}">
+    html += `<div class="cal-day${isToday ? ' today' : ''}" data-date="${dateStr}"
+      ondragover="event.preventDefault();this.classList.add('drag-over')"
+      ondragleave="this.classList.remove('drag-over')"
+      ondrop="dropOnDay(event, '${dateStr}')">
       <div class="cal-day-num">${d}</div>
       ${dayEvents.slice(0,3).map(e => `
-        <div class="cal-event${e.reminder_sent ? ' sent' : ''}" onclick="openEventModal(${e.id})" title="${e.title} - ${e.collaborator_name}">
+        <div class="cal-event${e.reminder_sent ? ' sent' : ''}"
+          draggable="true"
+          ondragstart="dragStart(event, ${e.id})"
+          onclick="openEventModal(${e.id})"
+          title="${e.title} - ${e.collaborator_name}">
           ${e.event_time} ${e.title}
         </div>
       `).join('')}
@@ -1467,6 +1517,48 @@ function renderCalendar() {
   }
 
   document.getElementById('cal-grid').innerHTML = html;
+}
+
+let draggedEventId = null;
+
+function dragStart(ev, id) {
+  draggedEventId = id;
+  ev.dataTransfer.effectAllowed = 'move';
+}
+
+async function dropOnDay(ev, newDate) {
+  ev.currentTarget.classList.remove('drag-over');
+  if (!draggedEventId) return;
+  const events = getEvents();
+  const idx = events.findIndex(e => e.id === draggedEventId);
+  if (idx === -1 || events[idx].event_date === newDate) { draggedEventId = null; return; }
+  events[idx] = { ...events[idx], event_date: newDate };
+  saveEvents(events);
+  await saveEventToSheets(events[idx]);
+  draggedEventId = null;
+  renderCalendar();
+}
+
+async function exportCalendarPDF() {
+  const btn = event.currentTarget;
+  btn.textContent = '⏳ PDF...';
+  btn.disabled = true;
+  try {
+    const grid = document.getElementById('cal-grid');
+    const canvas = await html2canvas(grid, { scale: 2, backgroundColor: '#ffffff' });
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+    const title = document.getElementById('cal-title').textContent;
+    pdf.setFontSize(16);
+    pdf.text(title, 14, 14);
+    const imgW = 270;
+    const imgH = (canvas.height * imgW) / canvas.width;
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 14, 20, imgW, imgH);
+    pdf.save(`calendario_${title.replace(/ /g,'_')}.pdf`);
+  } finally {
+    btn.textContent = '📄 PDF';
+    btn.disabled = false;
+  }
 }
 
 // ============================================================
@@ -1609,6 +1701,9 @@ function initNotifications() {
   if (!('Notification' in window)) return;
   if (Notification.permission === 'default') {
     Notification.requestPermission();
+  }
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/promemoria-aziendali/sw.js').catch(err => console.warn('SW:', err));
   }
 }
 
