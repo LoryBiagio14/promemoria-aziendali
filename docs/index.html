@@ -313,19 +313,28 @@
   <path d="M29 44 C31 48 34 51 36 54" stroke="#d4a843" stroke-width="1.3" stroke-linecap="round" opacity="0.7"/>
 </svg></div>
       <h1>Promemoria</h1>
-      <p>Seleziona lo spazio di lavoro</p>
+      <p data-i18n="ws.title">Seleziona lo spazio di lavoro</p>
+    </div>
+    <div style="text-align:right;margin-bottom:12px">
+      <select onchange="changeLangPre(this.value)" id="lang-select-pre" style="background:#f5f2ec;border:1px solid #ddd;border-radius:6px;padding:5px 8px;font-size:12px;cursor:pointer">
+        <option value="it">🇮🇹 Italiano</option><option value="en">🇬🇧 English</option>
+        <option value="es">🇪🇸 Español</option><option value="fr">🇫🇷 Français</option>
+        <option value="de">🇩🇪 Deutsch</option><option value="pt">🇵🇹 Português</option>
+        <option value="nl">🇳🇱 Nederlands</option><option value="pl">🇵🇱 Polski</option>
+        <option value="ru">🇷🇺 Русский</option>
+      </select>
     </div>
     <div class="form-group">
-      <label>Nome spazio</label>
+      <label data-i18n="ws.wsname">Nome spazio</label>
       <input type="text" id="ws-name" placeholder="Es. Azienda" onkeydown="if(event.key==='Enter') document.getElementById('ws-password').focus()" />
     </div>
     <div class="form-group">
-      <label>Password spazio</label>
+      <label data-i18n="ws.wspass">Password spazio</label>
       <input type="password" id="ws-password" placeholder="••••••••" onkeydown="if(event.key==='Enter') doSelectWorkspace()" />
     </div>
-    <button class="btn btn-primary" onclick="doSelectWorkspace()">Continua</button>
+    <button class="btn btn-primary" onclick="doSelectWorkspace()" data-i18n="ws.continue">Continua</button>
     <div class="error-msg" id="ws-error"></div>
-    <div class="login-back" style="margin-top:20px"><a href="#" onclick="showContactPage()">Hai bisogno di aiuto? Contattaci</a></div>
+    <div class="login-back" style="margin-top:20px"><a href="#" onclick="showContactPage()" data-i18n="ws.help">Hai bisogno di aiuto? Contattaci</a></div>
   </div>
 </div>
 
@@ -333,24 +342,24 @@
 <div id="contact-page" style="display:none">
   <div class="login-card">
     <div class="login-logo">
-      <h1 style="font-size:20px">Contattaci</h1>
-      <p>Ti risponderemo via email</p>
+      <h1 style="font-size:20px" data-i18n="contact.pre.title">Contattaci</h1>
+      <p data-i18n="contact.pre.subtitle">Ti risponderemo via email</p>
     </div>
     <div class="form-group">
-      <label>Nome</label>
-      <input type="text" id="contact-name" placeholder="Il tuo nome" />
+      <label data-i18n="contact.name">Nome</label>
+      <input type="text" id="contact-name" placeholder="Il tuo nome" data-i18n-ph="contact.namePh" />
     </div>
     <div class="form-group">
-      <label>Email</label>
-      <input type="email" id="contact-email" placeholder="La tua email" />
+      <label data-i18n="contact.email">Email</label>
+      <input type="email" id="contact-email" placeholder="La tua email" data-i18n-ph="contact.emailPh" />
     </div>
     <div class="form-group">
-      <label>Messaggio</label>
-      <textarea id="contact-message" rows="4" placeholder="Scrivi il tuo messaggio..."></textarea>
+      <label data-i18n="contact.message">Messaggio</label>
+      <textarea id="contact-message" rows="4" placeholder="Scrivi il tuo messaggio..." data-i18n-ph="contact.messagePh"></textarea>
     </div>
-    <button class="btn btn-primary" onclick="sendContactEmail('contact-name','contact-email','contact-message','contact-result')">Invia messaggio</button>
+    <button class="btn btn-primary" onclick="sendContactEmail('contact-name','contact-email','contact-message','contact-result')" data-i18n="contact.send">Invia messaggio</button>
     <div class="error-msg" id="contact-result"></div>
-    <div class="login-back" style="margin-top:16px"><a href="#" onclick="backToWsFromContact()">← Torna indietro</a></div>
+    <div class="login-back" style="margin-top:16px"><a href="#" onclick="backToWsFromContact()" data-i18n="contact.pre.back">← Torna indietro</a></div>
   </div>
 </div>
 
@@ -371,18 +380,18 @@
   <path d="M29 44 C31 48 34 51 36 54" stroke="#d4a843" stroke-width="1.3" stroke-linecap="round" opacity="0.7"/>
 </svg></div>
       <h1 id="login-ws-title">Promemoria</h1>
-      <p>Accedi al tuo account</p>
+      <p data-i18n="login.subtitle">Accedi al tuo account</p>
     </div>
     <div class="form-group">
-      <label>Username</label>
-      <input type="text" id="login-user" placeholder="Il tuo username" />
+      <label data-i18n="login.username">Username</label>
+      <input type="text" id="login-user" placeholder="Il tuo username" data-i18n-ph="login.usernamePh" />
     </div>
     <div class="form-group">
-      <label>Password</label>
+      <label data-i18n="login.password">Password</label>
       <input type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter') doLogin()" />
     </div>
-    <button class="btn btn-primary" onclick="doLogin()">Accedi</button>
-    <div class="login-back"><a href="#" onclick="backToWorkspace()">← Cambia spazio di lavoro</a></div>
+    <button class="btn btn-primary" onclick="doLogin()" data-i18n="login.submit">Accedi</button>
+    <div class="login-back"><a href="#" onclick="backToWorkspace()" data-i18n="login.back">← Cambia spazio di lavoro</a></div>
     <div class="error-msg" id="login-error"></div>
   </div>
 </div>
@@ -410,27 +419,27 @@
     <nav class="sidebar-nav" id="nav-tabs">
       <div class="nav-item nav-tab active" onclick="showPage('dashboard')">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-        Dashboard
+        <span data-i18n="nav.dashboard">Dashboard</span>
       </div>
       <div class="nav-item nav-tab" onclick="showPage('events')">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Eventi
+        <span data-i18n="nav.events">Eventi</span>
       </div>
       <div class="nav-item nav-tab" onclick="showPage('calendar')">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="8.01" y2="14"/><line x1="12" y1="14" x2="12.01" y2="14"/><line x1="16" y1="14" x2="16.01" y2="14"/></svg>
-        Calendario
+        <span data-i18n="nav.calendar">Calendario</span>
       </div>
       <div class="nav-item nav-tab admin-only" onclick="showPage('users')" style="display:none">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.85"/></svg>
-        Utenti
+        <span data-i18n="nav.users">Utenti</span>
       </div>
       <div class="nav-item nav-tab" onclick="showPage('contact')">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Contatti
+        <span data-i18n="nav.contact">Contatti</span>
       </div>
       <div class="nav-item nav-tab" onclick="showPage('recurring')">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="14"/></svg>
-        Ricorrenti
+        <span data-i18n="nav.recurring">Ricorrenti</span>
       </div>
     </nav>
     <div class="sidebar-footer">
@@ -438,7 +447,18 @@
         <div class="sidebar-user-dot"></div>
         <span class="sidebar-user-name" id="topbar-username"></span>
       </div>
-      <button class="btn-logout" onclick="doLogout()">Esci</button>
+      <select id="lang-select" onchange="changeLang(this.value)" style="background:#252525;color:#888;border:1px solid #333;border-radius:6px;padding:5px 8px;font-size:11px;cursor:pointer;width:100%;margin-bottom:8px">
+        <option value="it">🇮🇹 Italiano</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="es">🇪🇸 Español</option>
+        <option value="fr">🇫🇷 Français</option>
+        <option value="de">🇩🇪 Deutsch</option>
+        <option value="pt">🇵🇹 Português</option>
+        <option value="nl">🇳🇱 Nederlands</option>
+        <option value="pl">🇵🇱 Polski</option>
+        <option value="ru">🇷🇺 Русский</option>
+      </select>
+      <button class="btn-logout" onclick="doLogout()" data-i18n="nav.logout">Esci</button>
     </div>
   </div>
 
@@ -467,17 +487,17 @@
 
     <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
-      <div class="page-title">Panoramica</div>
+      <div class="page-title" data-i18n="page.dashboard.title">Panoramica</div>
       <div class="page-title-line"></div>
-      <div class="page-subtitle">Tutto sotto controllo, in un colpo d'occhio.</div>
+      <div class="page-subtitle" data-i18n="page.dashboard.subtitle">Tutto sotto controllo, in un colpo d'occhio.</div>
       <div class="stats-grid" id="stats-grid"></div>
       <div class="dashboard-bottom" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
         <div class="card">
-          <div class="card-title">Prossimi 7 giorni</div>
+          <div class="card-title" data-i18n="page.dashboard.upcoming">Prossimi 7 giorni</div>
           <div id="upcoming-list"></div>
         </div>
         <div class="card">
-          <div class="card-title">Top collaboratori</div>
+          <div class="card-title" data-i18n="page.dashboard.topcollab">Top collaboratori</div>
           <div id="top-collab-list"></div>
         </div>
       </div>
@@ -485,31 +505,31 @@
 
     <!-- EVENTI -->
     <div class="page" id="page-events">
-      <div class="page-title">Gestione Eventi</div>
+      <div class="page-title" data-i18n="page.events.title">Gestione Eventi</div>
       <div class="page-title-line"></div>
-      <div class="page-subtitle" style="margin-bottom:0">Crea e gestisci i promemoria per i tuoi collaboratori.</div>
+      <div class="page-subtitle" style="margin-bottom:0" data-i18n="page.events.subtitle">Crea e gestisci i promemoria per i tuoi collaboratori.</div>
       <div class="top-bar-actions" style="margin-top:20px">
         <span></span>
         <div style="display:flex;gap:8px">
-          <button class="btn btn-outline btn-sm" onclick="exportCSV()">Esporta CSV</button>
-          <button class="btn btn-success btn-sm" onclick="openEventModal()">+ Nuovo evento</button>
+          <button class="btn btn-outline btn-sm" onclick="exportCSV()" data-i18n="btn.exportcsv">Esporta CSV</button>
+          <button class="btn btn-success btn-sm" onclick="openEventModal()" data-i18n="btn.newevent">+ Nuovo evento</button>
         </div>
       </div>
       <div class="filters">
-        <input type="text" id="filter-search" placeholder="Cerca..." oninput="renderEvents()" style="min-width:200px">
+        <input type="text" id="filter-search" placeholder="Cerca..." oninput="renderEvents()" data-i18n-ph="filter.search" style="min-width:200px">
         <select id="filter-collab" onchange="renderEvents()">
-          <option value="">Tutti i collaboratori</option>
+          <option value="" data-i18n="filter.allcollabs">Tutti i collaboratori</option>
         </select>
         <select id="filter-reminder" onchange="renderEvents()">
-          <option value="">Tutti i promemoria</option>
-          <option value="sent">Inviato</option>
-          <option value="pending">In attesa</option>
-          <option value="none">Nessuno</option>
+          <option value="" data-i18n="filter.allreminders">Tutti i promemoria</option>
+          <option value="sent" data-i18n="filter.sent">Inviato</option>
+          <option value="pending" data-i18n="filter.pending">In attesa</option>
+          <option value="none" data-i18n="filter.none">Nessuno</option>
         </select>
         <select id="filter-month" onchange="renderEvents()">
-          <option value="">Tutti i mesi</option>
+          <option value="" data-i18n="filter.allmonths">Tutti i mesi</option>
         </select>
-        <button class="btn btn-outline btn-sm" onclick="clearFilters()">Rimuovi filtri</button>
+        <button class="btn btn-outline btn-sm" onclick="clearFilters()" data-i18n="btn.removefilters">Rimuovi filtri</button>
         <span id="events-count" style="color:#888;font-size:13px;margin-left:auto"></span>
       </div>
       <div class="card events-table-wrap" style="padding:0">
@@ -517,13 +537,13 @@
           <table>
             <thead>
               <tr>
-                <th>Collaboratore</th>
-                <th>Titolo</th>
-                <th>Data</th>
-                <th>Ora</th>
-                <th>Promemoria</th>
-                <th>Stato</th>
-                <th>Azioni</th>
+                <th data-i18n="th.collaborator">Collaboratore</th>
+                <th data-i18n="th.title">Titolo</th>
+                <th data-i18n="th.date">Data</th>
+                <th data-i18n="th.time">Ora</th>
+                <th data-i18n="th.reminder">Promemoria</th>
+                <th data-i18n="th.status">Stato</th>
+                <th data-i18n="th.actions">Azioni</th>
               </tr>
             </thead>
             <tbody id="events-table"></tbody>
@@ -534,12 +554,12 @@
 
     <!-- CALENDARIO -->
     <div class="page" id="page-calendar">
-      <div class="page-title">Calendario</div>
+      <div class="page-title" data-i18n="page.calendar.title">Calendario</div>
       <div class="page-title-line"></div>
-      <div class="page-subtitle" style="margin-bottom:0">Visualizza gli eventi nel tempo.</div>
+      <div class="page-subtitle" style="margin-bottom:0" data-i18n="page.calendar.subtitle">Visualizza gli eventi nel tempo.</div>
       <div class="top-bar-actions" style="margin-top:20px">
         <span></span>
-        <button class="btn btn-success btn-sm" onclick="openEventModal()">+ Nuovo evento</button>
+        <button class="btn btn-success btn-sm" onclick="openEventModal()" data-i18n="btn.newevent">+ Nuovo evento</button>
       </div>
       <div class="card">
         <div class="calendar-header">
@@ -564,18 +584,18 @@
 
     <!-- UTENTI (solo admin) -->
     <div class="page" id="page-users">
-      <div class="page-title">Gestione Utenti</div>
+      <div class="page-title" data-i18n="page.users.title">Gestione Utenti</div>
       <div class="page-title-line"></div>
-      <div class="page-subtitle" style="margin-bottom:0">Amministra gli accessi al sistema.</div>
+      <div class="page-subtitle" style="margin-bottom:0" data-i18n="page.users.subtitle">Amministra gli accessi al sistema.</div>
       <div class="top-bar-actions" style="margin-top:20px">
         <span></span>
-        <button class="btn btn-success btn-sm" onclick="openUserModal()">+ Nuovo utente</button>
+        <button class="btn btn-success btn-sm" onclick="openUserModal()" data-i18n="btn.newuser">+ Nuovo utente</button>
       </div>
       <div class="card" style="padding:0">
         <div class="table-container">
           <table>
             <thead>
-              <tr><th>Username</th><th>Nome</th><th>Email</th><th>Ruolo</th><th>Azioni</th></tr>
+              <tr><th data-i18n="th.username">Username</th><th data-i18n="th.name">Nome</th><th data-i18n="th.email">Email</th><th data-i18n="th.role">Ruolo</th><th data-i18n="th.actions">Azioni</th></tr>
             </thead>
             <tbody id="users-table"></tbody>
           </table>
@@ -585,39 +605,39 @@
 
     <!-- CONTATTI -->
     <div class="page" id="page-contact">
-      <div class="page-title">Contattaci</div>
+      <div class="page-title" data-i18n="page.contact.title">Contattaci</div>
       <div class="page-title-line"></div>
-      <div class="page-subtitle">Scrivici, ti risponderemo al più presto.</div>
+      <div class="page-subtitle" data-i18n="page.contact.subtitle">Scrivici, ti risponderemo al più presto.</div>
       <div class="card" style="max-width:560px">
-        <div class="card-title">Invia un messaggio</div>
+        <div class="card-title" data-i18n="contact.cardtitle">Invia un messaggio</div>
         <div class="form-group">
-          <label>Nome</label>
-          <input type="text" id="app-contact-name" placeholder="Il tuo nome" />
+          <label data-i18n="contact.name">Nome</label>
+          <input type="text" id="app-contact-name" placeholder="Il tuo nome" data-i18n-ph="contact.namePh" />
         </div>
         <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="app-contact-email" placeholder="La tua email" />
+          <label data-i18n="contact.email">Email</label>
+          <input type="email" id="app-contact-email" placeholder="La tua email" data-i18n-ph="contact.emailPh" />
         </div>
         <div class="form-group">
-          <label>Messaggio</label>
-          <textarea id="app-contact-message" rows="5" placeholder="Scrivi il tuo messaggio..."></textarea>
+          <label data-i18n="contact.message">Messaggio</label>
+          <textarea id="app-contact-message" rows="5" placeholder="Scrivi il tuo messaggio..." data-i18n-ph="contact.messagePh"></textarea>
         </div>
-        <button class="btn btn-primary" style="width:auto;padding:13px 32px" onclick="sendContactEmail('app-contact-name','app-contact-email','app-contact-message','app-contact-result')">Invia messaggio</button>
+        <button class="btn btn-primary" style="width:auto;padding:13px 32px" onclick="sendContactEmail('app-contact-name','app-contact-email','app-contact-message','app-contact-result')" data-i18n="contact.send">Invia messaggio</button>
         <div class="error-msg" id="app-contact-result" style="text-align:left;margin-top:12px"></div>
       </div>
     </div>
 
     <!-- NOTIFICHE RICORRENTI -->
     <div class="page" id="page-recurring">
-      <div class="page-title">Notifiche Ricorrenti</div>
+      <div class="page-title" data-i18n="page.recurring.title">Notifiche Ricorrenti</div>
       <div class="page-title-line"></div>
-      <div class="page-subtitle" style="margin-bottom:0">Email automatiche inviate ogni giorno all'orario scelto.</div>
+      <div class="page-subtitle" style="margin-bottom:0" data-i18n="page.recurring.subtitle">Email automatiche inviate ogni giorno all'orario scelto.</div>
       <div class="top-bar-actions" style="margin-top:20px">
         <span></span>
-        <button class="btn btn-success btn-sm" onclick="openRecurringModal()">+ Nuova notifica</button>
+        <button class="btn btn-success btn-sm" onclick="openRecurringModal()" data-i18n="btn.newnotif">+ Nuova notifica</button>
       </div>
       <div class="card" style="margin-bottom:12px;padding:16px 20px;background:#faf5e8;border-color:#e8d9a0">
-        <div style="font-size:13px;color:#7a6020;line-height:1.6">
+        <div style="font-size:13px;color:#7a6020;line-height:1.6" data-i18n="page.recurring.info">
           Le notifiche ricorrenti vengono inviate automaticamente via server ogni minuto — anche con l'app chiusa e il telefono spento.
         </div>
       </div>
@@ -625,7 +645,7 @@
         <div class="table-container">
           <table>
             <thead>
-              <tr><th>Titolo</th><th>Email</th><th>Orario</th><th>Giorni</th><th>Stato</th><th>Azioni</th></tr>
+              <tr><th data-i18n="th.title">Titolo</th><th data-i18n="th.email">Email</th><th data-i18n="th.recTime">Orario</th><th data-i18n="th.recDays">Giorni</th><th data-i18n="th.status">Stato</th><th data-i18n="th.actions">Azioni</th></tr>
             </thead>
             <tbody id="recurring-table"></tbody>
           </table>
@@ -639,54 +659,54 @@
 <!-- MODAL EVENTO -->
 <div class="modal-overlay" id="event-modal">
   <div class="modal">
-    <div class="modal-title" id="event-modal-title">Nuovo evento</div>
+    <div class="modal-title" id="event-modal-title" data-i18n="modal.event.new">Nuovo evento</div>
     <div class="form-group">
-      <label>Destinatario *</label>
+      <label data-i18n="modal.event.recipient">Destinatario *</label>
       <select id="ev-collab-select" style="width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:var(--rsm);font-size:16px;font-family:inherit;background:#faf8f5;color:var(--dark)">
-        <option value="">Seleziona utente...</option>
+        <option value="" data-i18n="modal.event.selectUser">Seleziona utente...</option>
       </select>
       <input type="hidden" id="ev-collab-name">
       <input type="hidden" id="ev-collab-email">
     </div>
     <div class="form-group">
-      <label>Titolo evento *</label>
-      <input type="text" id="ev-title" placeholder="Riunione, Scadenza...">
+      <label data-i18n="modal.event.eventtitle">Titolo evento *</label>
+      <input type="text" id="ev-title" placeholder="Riunione, Scadenza..." data-i18n-ph="modal.event.titlePh">
     </div>
     <div class="form-group">
-      <label>Descrizione</label>
-      <textarea id="ev-desc" rows="3" placeholder="Dettagli dell'evento..."></textarea>
+      <label data-i18n="modal.event.desc">Descrizione</label>
+      <textarea id="ev-desc" rows="3" placeholder="Dettagli dell'evento..." data-i18n-ph="modal.event.descPh"></textarea>
     </div>
     <div class="grid-2">
       <div class="form-group">
-        <label>Data evento *</label>
+        <label data-i18n="modal.event.date">Data evento *</label>
         <input type="date" id="ev-date">
       </div>
       <div class="form-group">
-        <label>Ora evento *</label>
+        <label data-i18n="modal.event.time">Ora evento *</label>
         <input type="time" id="ev-time">
       </div>
     </div>
     <div class="form-group">
-      <label>Data e ora promemoria</label>
+      <label data-i18n="modal.event.reminder">Data e ora promemoria</label>
       <input type="datetime-local" id="ev-reminder">
-      <small style="color:#888;font-size:12px">Lascia vuoto per nessun promemoria</small>
+      <small style="color:#888;font-size:12px" data-i18n="modal.event.reminderHint">Lascia vuoto per nessun promemoria</small>
     </div>
     <div class="form-group">
-      <label>Note aggiuntive</label>
-      <textarea id="ev-notes" rows="2" placeholder="Note interne, riferimenti..."></textarea>
+      <label data-i18n="modal.event.notes">Note aggiuntive</label>
+      <textarea id="ev-notes" rows="2" placeholder="Note interne, riferimenti..." data-i18n-ph="modal.event.notesPh"></textarea>
     </div>
     <div class="form-group">
-      <label>Allegato</label>
+      <label data-i18n="modal.event.file">Allegato</label>
       <input type="file" id="ev-file" style="padding:10px;font-size:14px">
       <div id="ev-file-current" style="font-size:13px;color:var(--gold);margin-top:6px"></div>
     </div>
     <div class="form-group" id="ev-reminder-sent-group" style="display:none">
-      <label><input type="checkbox" id="ev-reminder-sent"> Promemoria già inviato</label>
+      <label><input type="checkbox" id="ev-reminder-sent"> <span data-i18n="modal.event.reminderSent">Promemoria già inviato</span></label>
     </div>
     <div class="error-msg" id="event-error"></div>
     <div class="modal-actions">
-      <button class="btn btn-outline" onclick="closeEventModal()">Annulla</button>
-      <button class="btn btn-primary" onclick="saveEvent()">Salva</button>
+      <button class="btn btn-outline" onclick="closeEventModal()" data-i18n="btn.cancel">Annulla</button>
+      <button class="btn btn-primary" onclick="saveEvent()" data-i18n="btn.save">Salva</button>
     </div>
   </div>
 </div>
@@ -694,49 +714,49 @@
 <!-- MODAL NOTIFICA RICORRENTE -->
 <div class="modal-overlay" id="recurring-modal">
   <div class="modal">
-    <div class="modal-title" id="recurring-modal-title">Nuova notifica ricorrente</div>
+    <div class="modal-title" id="recurring-modal-title" data-i18n="modal.rec.new">Nuova notifica ricorrente</div>
     <div class="form-group">
-      <label>Titolo notifica *</label>
+      <label data-i18n="modal.rec.title">Titolo notifica *</label>
       <input type="text" id="rec-title" placeholder="Es. Prendi la pasticca">
     </div>
     <div class="form-group">
-      <label>Messaggio email</label>
+      <label data-i18n="modal.rec.message">Messaggio email</label>
       <textarea id="rec-message" rows="2" placeholder="Testo della email..."></textarea>
     </div>
     <div class="form-group">
-      <label>Email destinatario *</label>
+      <label data-i18n="modal.rec.email">Email destinatario *</label>
       <input type="email" id="rec-email" placeholder="tua@email.com">
     </div>
     <div class="grid-2">
       <div class="form-group">
-        <label>Orario *</label>
+        <label data-i18n="modal.rec.time">Orario *</label>
         <input type="time" id="rec-time">
       </div>
       <div class="form-group">
-        <label>Frequenza</label>
+        <label data-i18n="modal.rec.freq">Frequenza</label>
         <select id="rec-freq">
-          <option value="daily">Ogni giorno</option>
-          <option value="weekdays">Giorni feriali (Lun-Ven)</option>
-          <option value="weekend">Weekend (Sab-Dom)</option>
-          <option value="custom">Personalizzato</option>
+          <option value="daily" data-i18n="freq.daily">Ogni giorno</option>
+          <option value="weekdays" data-i18n="freq.weekdays">Giorni feriali (Lun-Ven)</option>
+          <option value="weekend" data-i18n="freq.weekend">Weekend (Sab-Dom)</option>
+          <option value="custom" data-i18n="freq.custom">Personalizzato</option>
         </select>
       </div>
     </div>
     <div class="form-group" id="rec-custom-days" style="display:none">
-      <label>Scegli i giorni</label>
+      <label data-i18n="rec.choosedays">Scegli i giorni</label>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
-        <label style="display:flex;align-items:center;gap:4px;font-size:13px;text-transform:none;letter-spacing:0;font-weight:500"><input type="checkbox" value="1" class="rec-day"> Lun</label>
-        <label style="display:flex;align-items:center;gap:4px;font-size:13px;text-transform:none;letter-spacing:0;font-weight:500"><input type="checkbox" value="2" class="rec-day"> Mar</label>
-        <label style="display:flex;align-items:center;gap:4px;font-size:13px;text-transform:none;letter-spacing:0;font-weight:500"><input type="checkbox" value="3" class="rec-day"> Mer</label>
-        <label style="display:flex;align-items:center;gap:4px;font-size:13px;text-transform:none;letter-spacing:0;font-weight:500"><input type="checkbox" value="4" class="rec-day"> Gio</label>
-        <label style="display:flex;align-items:center;gap:4px;font-size:13px;text-transform:none;letter-spacing:0;font-weight:500"><input type="checkbox" value="5" class="rec-day"> Ven</label>
-        <label style="display:flex;align-items:center;gap:4px;font-size:13px;text-transform:none;letter-spacing:0;font-weight:500"><input type="checkbox" value="6" class="rec-day"> Sab</label>
-        <label style="display:flex;align-items:center;gap:4px;font-size:13px;text-transform:none;letter-spacing:0;font-weight:500"><input type="checkbox" value="0" class="rec-day"> Dom</label>
+        <label style="display:flex;align-items:center;gap:4px;font-size:13px;text-transform:none;letter-spacing:0;font-weight:500"><input type="checkbox" value="1" class="rec-day"> <span data-i18n="days.mon">Lun</span></label>
+        <label style="display:flex;align-items:center;gap:4px;font-size:13px;text-transform:none;letter-spacing:0;font-weight:500"><input type="checkbox" value="2" class="rec-day"> <span data-i18n="days.tue">Mar</span></label>
+        <label style="display:flex;align-items:center;gap:4px;font-size:13px;text-transform:none;letter-spacing:0;font-weight:500"><input type="checkbox" value="3" class="rec-day"> <span data-i18n="days.wed">Mer</span></label>
+        <label style="display:flex;align-items:center;gap:4px;font-size:13px;text-transform:none;letter-spacing:0;font-weight:500"><input type="checkbox" value="4" class="rec-day"> <span data-i18n="days.thu">Gio</span></label>
+        <label style="display:flex;align-items:center;gap:4px;font-size:13px;text-transform:none;letter-spacing:0;font-weight:500"><input type="checkbox" value="5" class="rec-day"> <span data-i18n="days.fri">Ven</span></label>
+        <label style="display:flex;align-items:center;gap:4px;font-size:13px;text-transform:none;letter-spacing:0;font-weight:500"><input type="checkbox" value="6" class="rec-day"> <span data-i18n="days.sat">Sab</span></label>
+        <label style="display:flex;align-items:center;gap:4px;font-size:13px;text-transform:none;letter-spacing:0;font-weight:500"><input type="checkbox" value="0" class="rec-day"> <span data-i18n="days.sun">Dom</span></label>
       </div>
     </div>
     <div class="modal-actions">
-      <button class="btn btn-outline" onclick="closeRecurringModal()">Annulla</button>
-      <button class="btn btn-success" onclick="saveRecurring()">Salva</button>
+      <button class="btn btn-outline" onclick="closeRecurringModal()" data-i18n="btn.cancel">Annulla</button>
+      <button class="btn btn-success" onclick="saveRecurring()" data-i18n="btn.save">Salva</button>
     </div>
   </div>
 </div>
@@ -744,34 +764,34 @@
 <!-- MODAL UTENTE -->
 <div class="modal-overlay" id="user-modal">
   <div class="modal">
-    <div class="modal-title" id="user-modal-title">Nuovo utente</div>
+    <div class="modal-title" id="user-modal-title" data-i18n="modal.user.new">Nuovo utente</div>
     <div class="form-group">
-      <label>Username *</label>
+      <label data-i18n="modal.user.username">Username *</label>
       <input type="text" id="usr-username" placeholder="mariorossi">
     </div>
     <div class="form-group">
-      <label>Nome completo</label>
+      <label data-i18n="modal.user.fullname">Nome completo</label>
       <input type="text" id="usr-name" placeholder="Mario Rossi">
     </div>
     <div class="form-group">
-      <label>Email *</label>
+      <label data-i18n="modal.user.email">Email *</label>
       <input type="email" id="usr-email" placeholder="mario@azienda.it">
     </div>
     <div class="form-group">
-      <label>Password *</label>
-      <input type="password" id="usr-pass" placeholder="Min. 6 caratteri">
+      <label data-i18n="modal.user.password">Password *</label>
+      <input type="password" id="usr-pass" placeholder="Min. 6 caratteri" data-i18n-ph="modal.user.passwordHint">
     </div>
     <div class="form-group">
-      <label>Ruolo</label>
+      <label data-i18n="modal.user.role">Ruolo</label>
       <select id="usr-role">
-        <option value="user">Utente</option>
-        <option value="admin">Amministratore</option>
+        <option value="user" data-i18n="role.user">Utente</option>
+        <option value="admin" data-i18n="role.admin">Amministratore</option>
       </select>
     </div>
     <div class="error-msg" id="user-error"></div>
     <div class="modal-actions">
-      <button class="btn btn-outline" onclick="closeUserModal()">Annulla</button>
-      <button class="btn btn-primary" onclick="saveUser()">Salva</button>
+      <button class="btn btn-outline" onclick="closeUserModal()" data-i18n="btn.cancel">Annulla</button>
+      <button class="btn btn-primary" onclick="saveUser()" data-i18n="btn.save">Salva</button>
     </div>
     </div><!-- /main -->
   </div><!-- /content-area -->
@@ -779,6 +799,337 @@
 </div><!-- /app -->
 
 <script>
+// ============================================================
+// INTERNAZIONALIZZAZIONE (i18n)
+// ============================================================
+let currentLang = localStorage.getItem('pa_lang_global') || (navigator.language||'it').split('-')[0];
+
+const LANGS = {
+  it:{
+    'nav.dashboard':'Dashboard','nav.events':'Eventi','nav.calendar':'Calendario','nav.users':'Utenti','nav.contact':'Contatti','nav.recurring':'Ricorrenti','nav.logout':'Esci',
+    'sidebar.tagline':'Gestione Aziendale',
+    'page.dashboard.title':'Panoramica','page.dashboard.subtitle':'Tutto sotto controllo, in un colpo d\'occhio.','page.dashboard.upcoming':'Prossimi 7 giorni','page.dashboard.topcollab':'Top collaboratori',
+    'page.events.title':'Gestione Eventi','page.events.subtitle':'Crea e gestisci i promemoria per i tuoi collaboratori.',
+    'page.calendar.title':'Calendario','page.calendar.subtitle':'Visualizza gli eventi nel tempo.',
+    'page.users.title':'Gestione Utenti','page.users.subtitle':'Amministra gli accessi al sistema.',
+    'page.contact.title':'Contattaci','page.contact.subtitle':'Scrivici, ti risponderemo al più presto.',
+    'page.recurring.title':'Notifiche Ricorrenti','page.recurring.subtitle':'Email automatiche inviate ogni giorno all\'orario scelto.',
+    'page.recurring.info':'Le notifiche ricorrenti vengono inviate automaticamente via server ogni minuto — anche con l\'app chiusa e il telefono spento.',
+    'btn.exportcsv':'Esporta CSV','btn.newevent':'+ Nuovo evento','btn.newuser':'+ Nuovo utente','btn.newnotif':'+ Nuova notifica','btn.cancel':'Annulla','btn.save':'Salva','btn.today':'Oggi','btn.removefilters':'Rimuovi filtri','btn.sendmsg':'Invia messaggio','btn.continue':'Continua','btn.login':'Accedi',
+    'filter.search':'Cerca...','filter.allcollabs':'Tutti i collaboratori','filter.allreminders':'Tutti i promemoria','filter.allmonths':'Tutti i mesi','filter.sent':'Inviato','filter.pending':'In attesa','filter.none':'Nessuno',
+    'th.collaborator':'Collaboratore','th.title':'Titolo','th.date':'Data','th.time':'Ora','th.reminder':'Promemoria','th.status':'Stato','th.actions':'Azioni','th.username':'Username','th.name':'Nome','th.email':'Email','th.role':'Ruolo','th.recTime':'Orario','th.recDays':'Giorni',
+    'view.grid':'☰ Griglia','view.agenda':'≡ Agenda',
+    'modal.event.new':'Nuovo evento','modal.event.edit':'Modifica evento','modal.event.recipient':'Destinatario *','modal.event.eventtitle':'Titolo evento *','modal.event.desc':'Descrizione','modal.event.date':'Data evento *','modal.event.time':'Ora evento *','modal.event.reminder':'Data e ora promemoria','modal.event.reminderHint':'Lascia vuoto per nessun promemoria','modal.event.notes':'Note aggiuntive','modal.event.file':'Allegato','modal.event.reminderSent':'Promemoria già inviato','modal.event.selectUser':'Seleziona utente...','modal.event.titlePh':'Riunione, Scadenza...','modal.event.descPh':'Dettagli dell\'evento...','modal.event.notesPh':'Note interne, riferimenti...',
+    'modal.user.new':'Nuovo utente','modal.user.edit':'Modifica utente','modal.user.username':'Username *','modal.user.fullname':'Nome completo','modal.user.email':'Email *','modal.user.password':'Password *','modal.user.passwordHint':'Min. 6 caratteri','modal.user.role':'Ruolo',
+    'role.user':'Utente','role.admin':'Amministratore',
+    'modal.rec.new':'Nuova notifica ricorrente','modal.rec.edit':'Modifica notifica ricorrente','modal.rec.title':'Titolo notifica *','modal.rec.message':'Messaggio email','modal.rec.email':'Email destinatario *','modal.rec.time':'Orario *','modal.rec.freq':'Frequenza',
+    'freq.daily':'Ogni giorno','freq.weekdays':'Giorni feriali (Lun-Ven)','freq.weekend':'Weekend (Sab-Dom)','freq.custom':'Personalizzato','rec.choosedays':'Scegli i giorni',
+    'days.mon':'Lun','days.tue':'Mar','days.wed':'Mer','days.thu':'Gio','days.fri':'Ven','days.sat':'Sab','days.sun':'Dom',
+    'ws.title':'Seleziona lo spazio di lavoro','ws.wsname':'Nome spazio','ws.wspass':'Password spazio','ws.continue':'Continua','ws.help':'Hai bisogno di aiuto? Contattaci',
+    'login.subtitle':'Accedi al tuo account','login.username':'Username','login.password':'Password','login.usernamePh':'Il tuo username','login.submit':'Accedi','login.back':'← Cambia spazio di lavoro',
+    'contact.pre.title':'Contattaci','contact.pre.subtitle':'Ti risponderemo via email','contact.pre.back':'← Torna indietro',
+    'contact.name':'Nome','contact.namePh':'Il tuo nome','contact.email':'Email','contact.emailPh':'La tua email','contact.message':'Messaggio','contact.messagePh':'Scrivi il tuo messaggio...','contact.send':'Invia messaggio','contact.cardtitle':'Invia un messaggio',
+    'js.deleteEvent':'Eliminare questo evento?','js.fieldRequired':'Seleziona un destinatario e compila tutti i campi (*)','js.sendReminder':'Inviare promemoria a','js.emailSent':'Email inviata a','js.noEvents':'Nessun evento trovato','js.results':'risultati','js.today':'Oggi','js.noUpcoming':'Nessun evento nei prossimi 7 giorni',
+    'badge.sent':'Inviato','badge.pending':'In attesa','badge.none':'Nessuno',
+    'stat.total':'Totale eventi','stat.today':'Oggi','stat.week':'Questa settimana','stat.pending':'In attesa',
+    'agenda.empty':'Nessun evento in',
+    months:['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],
+    daysFull:['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'],
+  },
+  en:{
+    'nav.dashboard':'Dashboard','nav.events':'Events','nav.calendar':'Calendar','nav.users':'Users','nav.contact':'Contact','nav.recurring':'Recurring','nav.logout':'Logout',
+    'sidebar.tagline':'Business Management',
+    'page.dashboard.title':'Overview','page.dashboard.subtitle':'Everything under control, at a glance.','page.dashboard.upcoming':'Next 7 days','page.dashboard.topcollab':'Top collaborators',
+    'page.events.title':'Event Management','page.events.subtitle':'Create and manage reminders for your collaborators.',
+    'page.calendar.title':'Calendar','page.calendar.subtitle':'View events over time.',
+    'page.users.title':'User Management','page.users.subtitle':'Manage system access.',
+    'page.contact.title':'Contact Us','page.contact.subtitle':'Write to us, we\'ll reply as soon as possible.',
+    'page.recurring.title':'Recurring Notifications','page.recurring.subtitle':'Automatic emails sent daily at the chosen time.',
+    'page.recurring.info':'Recurring notifications are sent automatically via server every minute — even with the app closed and phone off.',
+    'btn.exportcsv':'Export CSV','btn.newevent':'+ New event','btn.newuser':'+ New user','btn.newnotif':'+ New notification','btn.cancel':'Cancel','btn.save':'Save','btn.today':'Today','btn.removefilters':'Remove filters','btn.sendmsg':'Send message','btn.continue':'Continue','btn.login':'Login',
+    'filter.search':'Search...','filter.allcollabs':'All collaborators','filter.allreminders':'All reminders','filter.allmonths':'All months','filter.sent':'Sent','filter.pending':'Pending','filter.none':'None',
+    'th.collaborator':'Collaborator','th.title':'Title','th.date':'Date','th.time':'Time','th.reminder':'Reminder','th.status':'Status','th.actions':'Actions','th.username':'Username','th.name':'Name','th.email':'Email','th.role':'Role','th.recTime':'Time','th.recDays':'Days',
+    'view.grid':'☰ Grid','view.agenda':'≡ Agenda',
+    'modal.event.new':'New event','modal.event.edit':'Edit event','modal.event.recipient':'Recipient *','modal.event.eventtitle':'Event title *','modal.event.desc':'Description','modal.event.date':'Event date *','modal.event.time':'Event time *','modal.event.reminder':'Reminder date and time','modal.event.reminderHint':'Leave empty for no reminder','modal.event.notes':'Additional notes','modal.event.file':'Attachment','modal.event.reminderSent':'Reminder already sent','modal.event.selectUser':'Select user...','modal.event.titlePh':'Meeting, Deadline...','modal.event.descPh':'Event details...','modal.event.notesPh':'Internal notes, references...',
+    'modal.user.new':'New user','modal.user.edit':'Edit user','modal.user.username':'Username *','modal.user.fullname':'Full name','modal.user.email':'Email *','modal.user.password':'Password *','modal.user.passwordHint':'Min. 6 characters','modal.user.role':'Role',
+    'role.user':'User','role.admin':'Administrator',
+    'modal.rec.new':'New recurring notification','modal.rec.edit':'Edit recurring notification','modal.rec.title':'Notification title *','modal.rec.message':'Email message','modal.rec.email':'Recipient email *','modal.rec.time':'Time *','modal.rec.freq':'Frequency',
+    'freq.daily':'Every day','freq.weekdays':'Weekdays (Mon-Fri)','freq.weekend':'Weekend (Sat-Sun)','freq.custom':'Custom','rec.choosedays':'Choose days',
+    'days.mon':'Mon','days.tue':'Tue','days.wed':'Wed','days.thu':'Thu','days.fri':'Fri','days.sat':'Sat','days.sun':'Sun',
+    'ws.title':'Select workspace','ws.wsname':'Workspace name','ws.wspass':'Workspace password','ws.continue':'Continue','ws.help':'Need help? Contact us',
+    'login.subtitle':'Sign in to your account','login.username':'Username','login.password':'Password','login.usernamePh':'Your username','login.submit':'Login','login.back':'← Change workspace',
+    'contact.pre.title':'Contact Us','contact.pre.subtitle':'We\'ll reply by email','contact.pre.back':'← Go back',
+    'contact.name':'Name','contact.namePh':'Your name','contact.email':'Email','contact.emailPh':'Your email','contact.message':'Message','contact.messagePh':'Write your message...','contact.send':'Send message','contact.cardtitle':'Send a message',
+    'js.deleteEvent':'Delete this event?','js.fieldRequired':'Select a recipient and fill in all required fields (*)','js.sendReminder':'Send reminder to','js.emailSent':'Email sent to','js.noEvents':'No events found','js.results':'results','js.today':'Today','js.noUpcoming':'No events in the next 7 days',
+    'badge.sent':'Sent','badge.pending':'Pending','badge.none':'None',
+    'stat.total':'Total events','stat.today':'Today','stat.week':'This week','stat.pending':'Pending',
+    'agenda.empty':'No events in',
+    months:['January','February','March','April','May','June','July','August','September','October','November','December'],
+    daysFull:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+  },
+  es:{
+    'nav.dashboard':'Panel','nav.events':'Eventos','nav.calendar':'Calendario','nav.users':'Usuarios','nav.contact':'Contacto','nav.recurring':'Recurrentes','nav.logout':'Salir',
+    'sidebar.tagline':'Gestión Empresarial',
+    'page.dashboard.title':'Resumen','page.dashboard.subtitle':'Todo bajo control, de un vistazo.','page.dashboard.upcoming':'Próximos 7 días','page.dashboard.topcollab':'Top colaboradores',
+    'page.events.title':'Gestión de Eventos','page.events.subtitle':'Crea y gestiona recordatorios para tus colaboradores.',
+    'page.calendar.title':'Calendario','page.calendar.subtitle':'Visualiza los eventos en el tiempo.',
+    'page.users.title':'Gestión de Usuarios','page.users.subtitle':'Administra el acceso al sistema.',
+    'page.contact.title':'Contáctanos','page.contact.subtitle':'Escríbenos, te responderemos lo antes posible.',
+    'page.recurring.title':'Notificaciones Recurrentes','page.recurring.subtitle':'Emails automáticos enviados diariamente a la hora elegida.',
+    'page.recurring.info':'Las notificaciones recurrentes se envían automáticamente cada minuto — incluso con la app cerrada.',
+    'btn.exportcsv':'Exportar CSV','btn.newevent':'+ Nuevo evento','btn.newuser':'+ Nuevo usuario','btn.newnotif':'+ Nueva notificación','btn.cancel':'Cancelar','btn.save':'Guardar','btn.today':'Hoy','btn.removefilters':'Quitar filtros','btn.sendmsg':'Enviar mensaje','btn.continue':'Continuar','btn.login':'Entrar',
+    'filter.search':'Buscar...','filter.allcollabs':'Todos los colaboradores','filter.allreminders':'Todos los recordatorios','filter.allmonths':'Todos los meses','filter.sent':'Enviado','filter.pending':'Pendiente','filter.none':'Ninguno',
+    'th.collaborator':'Colaborador','th.title':'Título','th.date':'Fecha','th.time':'Hora','th.reminder':'Recordatorio','th.status':'Estado','th.actions':'Acciones','th.username':'Usuario','th.name':'Nombre','th.email':'Email','th.role':'Rol','th.recTime':'Horario','th.recDays':'Días',
+    'view.grid':'☰ Cuadrícula','view.agenda':'≡ Agenda',
+    'modal.event.new':'Nuevo evento','modal.event.edit':'Editar evento','modal.event.recipient':'Destinatario *','modal.event.eventtitle':'Título del evento *','modal.event.desc':'Descripción','modal.event.date':'Fecha del evento *','modal.event.time':'Hora del evento *','modal.event.reminder':'Fecha y hora del recordatorio','modal.event.reminderHint':'Dejar vacío para sin recordatorio','modal.event.notes':'Notas adicionales','modal.event.file':'Adjunto','modal.event.reminderSent':'Recordatorio ya enviado','modal.event.selectUser':'Seleccionar usuario...','modal.event.titlePh':'Reunión, Vencimiento...','modal.event.descPh':'Detalles del evento...','modal.event.notesPh':'Notas internas, referencias...',
+    'modal.user.new':'Nuevo usuario','modal.user.edit':'Editar usuario','modal.user.username':'Usuario *','modal.user.fullname':'Nombre completo','modal.user.email':'Email *','modal.user.password':'Contraseña *','modal.user.passwordHint':'Mín. 6 caracteres','modal.user.role':'Rol',
+    'role.user':'Usuario','role.admin':'Administrador',
+    'modal.rec.new':'Nueva notificación recurrente','modal.rec.edit':'Editar notificación recurrente','modal.rec.title':'Título de notificación *','modal.rec.message':'Mensaje email','modal.rec.email':'Email destinatario *','modal.rec.time':'Horario *','modal.rec.freq':'Frecuencia',
+    'freq.daily':'Cada día','freq.weekdays':'Días laborables (Lun-Vie)','freq.weekend':'Fin de semana (Sáb-Dom)','freq.custom':'Personalizado','rec.choosedays':'Elegir días',
+    'days.mon':'Lun','days.tue':'Mar','days.wed':'Mié','days.thu':'Jue','days.fri':'Vie','days.sat':'Sáb','days.sun':'Dom',
+    'ws.title':'Seleccionar espacio de trabajo','ws.wsname':'Nombre del espacio','ws.wspass':'Contraseña del espacio','ws.continue':'Continuar','ws.help':'¿Necesitas ayuda? Contáctanos',
+    'login.subtitle':'Accede a tu cuenta','login.username':'Usuario','login.password':'Contraseña','login.usernamePh':'Tu usuario','login.submit':'Entrar','login.back':'← Cambiar espacio de trabajo',
+    'contact.pre.title':'Contáctanos','contact.pre.subtitle':'Te responderemos por email','contact.pre.back':'← Volver',
+    'contact.name':'Nombre','contact.namePh':'Tu nombre','contact.email':'Email','contact.emailPh':'Tu email','contact.message':'Mensaje','contact.messagePh':'Escribe tu mensaje...','contact.send':'Enviar mensaje','contact.cardtitle':'Enviar un mensaje',
+    'js.deleteEvent':'¿Eliminar este evento?','js.fieldRequired':'Selecciona un destinatario y completa todos los campos (*)','js.sendReminder':'Enviar recordatorio a','js.emailSent':'Email enviado a','js.noEvents':'No se encontraron eventos','js.results':'resultados','js.today':'Hoy','js.noUpcoming':'No hay eventos en los próximos 7 días',
+    'badge.sent':'Enviado','badge.pending':'Pendiente','badge.none':'Ninguno',
+    'stat.total':'Total eventos','stat.today':'Hoy','stat.week':'Esta semana','stat.pending':'Pendiente',
+    'agenda.empty':'No hay eventos en',
+    months:['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+    daysFull:['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+  },
+  fr:{
+    'nav.dashboard':'Tableau de bord','nav.events':'Événements','nav.calendar':'Calendrier','nav.users':'Utilisateurs','nav.contact':'Contact','nav.recurring':'Récurrents','nav.logout':'Déconnexion',
+    'sidebar.tagline':'Gestion d\'Entreprise',
+    'page.dashboard.title':'Aperçu','page.dashboard.subtitle':'Tout sous contrôle, en un coup d\'œil.','page.dashboard.upcoming':'7 prochains jours','page.dashboard.topcollab':'Top collaborateurs',
+    'page.events.title':'Gestion des Événements','page.events.subtitle':'Créez et gérez les rappels pour vos collaborateurs.',
+    'page.calendar.title':'Calendrier','page.calendar.subtitle':'Visualisez les événements dans le temps.',
+    'page.users.title':'Gestion des Utilisateurs','page.users.subtitle':'Gérez les accès au système.',
+    'page.contact.title':'Nous contacter','page.contact.subtitle':'Écrivez-nous, nous vous répondrons dès que possible.',
+    'page.recurring.title':'Notifications Récurrentes','page.recurring.subtitle':'Emails automatiques envoyés quotidiennement à l\'heure choisie.',
+    'page.recurring.info':'Les notifications récurrentes sont envoyées automatiquement chaque minute — même avec l\'application fermée.',
+    'btn.exportcsv':'Exporter CSV','btn.newevent':'+ Nouvel événement','btn.newuser':'+ Nouvel utilisateur','btn.newnotif':'+ Nouvelle notification','btn.cancel':'Annuler','btn.save':'Enregistrer','btn.today':'Aujourd\'hui','btn.removefilters':'Supprimer les filtres','btn.sendmsg':'Envoyer le message','btn.continue':'Continuer','btn.login':'Connexion',
+    'filter.search':'Rechercher...','filter.allcollabs':'Tous les collaborateurs','filter.allreminders':'Tous les rappels','filter.allmonths':'Tous les mois','filter.sent':'Envoyé','filter.pending':'En attente','filter.none':'Aucun',
+    'th.collaborator':'Collaborateur','th.title':'Titre','th.date':'Date','th.time':'Heure','th.reminder':'Rappel','th.status':'Statut','th.actions':'Actions','th.username':'Identifiant','th.name':'Nom','th.email':'Email','th.role':'Rôle','th.recTime':'Heure','th.recDays':'Jours',
+    'view.grid':'☰ Grille','view.agenda':'≡ Agenda',
+    'modal.event.new':'Nouvel événement','modal.event.edit':'Modifier l\'événement','modal.event.recipient':'Destinataire *','modal.event.eventtitle':'Titre de l\'événement *','modal.event.desc':'Description','modal.event.date':'Date de l\'événement *','modal.event.time':'Heure de l\'événement *','modal.event.reminder':'Date et heure du rappel','modal.event.reminderHint':'Laisser vide pour aucun rappel','modal.event.notes':'Notes supplémentaires','modal.event.file':'Pièce jointe','modal.event.reminderSent':'Rappel déjà envoyé','modal.event.selectUser':'Sélectionner un utilisateur...','modal.event.titlePh':'Réunion, Échéance...','modal.event.descPh':'Détails de l\'événement...','modal.event.notesPh':'Notes internes, références...',
+    'modal.user.new':'Nouvel utilisateur','modal.user.edit':'Modifier l\'utilisateur','modal.user.username':'Identifiant *','modal.user.fullname':'Nom complet','modal.user.email':'Email *','modal.user.password':'Mot de passe *','modal.user.passwordHint':'Min. 6 caractères','modal.user.role':'Rôle',
+    'role.user':'Utilisateur','role.admin':'Administrateur',
+    'modal.rec.new':'Nouvelle notification récurrente','modal.rec.edit':'Modifier la notification récurrente','modal.rec.title':'Titre de la notification *','modal.rec.message':'Message email','modal.rec.email':'Email destinataire *','modal.rec.time':'Heure *','modal.rec.freq':'Fréquence',
+    'freq.daily':'Chaque jour','freq.weekdays':'Jours ouvrables (Lun-Ven)','freq.weekend':'Week-end (Sam-Dim)','freq.custom':'Personnalisé','rec.choosedays':'Choisir les jours',
+    'days.mon':'Lun','days.tue':'Mar','days.wed':'Mer','days.thu':'Jeu','days.fri':'Ven','days.sat':'Sam','days.sun':'Dim',
+    'ws.title':'Sélectionner l\'espace de travail','ws.wsname':'Nom de l\'espace','ws.wspass':'Mot de passe de l\'espace','ws.continue':'Continuer','ws.help':'Besoin d\'aide ? Contactez-nous',
+    'login.subtitle':'Connectez-vous à votre compte','login.username':'Identifiant','login.password':'Mot de passe','login.usernamePh':'Votre identifiant','login.submit':'Connexion','login.back':'← Changer d\'espace de travail',
+    'contact.pre.title':'Nous contacter','contact.pre.subtitle':'Nous vous répondrons par email','contact.pre.back':'← Retour',
+    'contact.name':'Nom','contact.namePh':'Votre nom','contact.email':'Email','contact.emailPh':'Votre email','contact.message':'Message','contact.messagePh':'Écrivez votre message...','contact.send':'Envoyer le message','contact.cardtitle':'Envoyer un message',
+    'js.deleteEvent':'Supprimer cet événement ?','js.fieldRequired':'Sélectionnez un destinataire et remplissez tous les champs (*)','js.sendReminder':'Envoyer un rappel à','js.emailSent':'Email envoyé à','js.noEvents':'Aucun événement trouvé','js.results':'résultats','js.today':'Aujourd\'hui','js.noUpcoming':'Aucun événement dans les 7 prochains jours',
+    'badge.sent':'Envoyé','badge.pending':'En attente','badge.none':'Aucun',
+    'stat.total':'Total événements','stat.today':'Aujourd\'hui','stat.week':'Cette semaine','stat.pending':'En attente',
+    'agenda.empty':'Aucun événement en',
+    months:['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+    daysFull:['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+  },
+  de:{
+    'nav.dashboard':'Dashboard','nav.events':'Ereignisse','nav.calendar':'Kalender','nav.users':'Benutzer','nav.contact':'Kontakt','nav.recurring':'Wiederkehrend','nav.logout':'Abmelden',
+    'sidebar.tagline':'Unternehmensmanagement',
+    'page.dashboard.title':'Übersicht','page.dashboard.subtitle':'Alles im Griff, auf einen Blick.','page.dashboard.upcoming':'Nächste 7 Tage','page.dashboard.topcollab':'Top-Mitarbeiter',
+    'page.events.title':'Ereignisverwaltung','page.events.subtitle':'Erstellen und verwalten Sie Erinnerungen für Ihre Mitarbeiter.',
+    'page.calendar.title':'Kalender','page.calendar.subtitle':'Ereignisse im Zeitverlauf anzeigen.',
+    'page.users.title':'Benutzerverwaltung','page.users.subtitle':'Systemzugriff verwalten.',
+    'page.contact.title':'Kontakt','page.contact.subtitle':'Schreiben Sie uns, wir antworten so schnell wie möglich.',
+    'page.recurring.title':'Wiederkehrende Benachrichtigungen','page.recurring.subtitle':'Automatische E-Mails täglich zur gewählten Uhrzeit.',
+    'page.recurring.info':'Wiederkehrende Benachrichtigungen werden automatisch jede Minute gesendet — auch wenn die App geschlossen ist.',
+    'btn.exportcsv':'CSV exportieren','btn.newevent':'+ Neues Ereignis','btn.newuser':'+ Neuer Benutzer','btn.newnotif':'+ Neue Benachrichtigung','btn.cancel':'Abbrechen','btn.save':'Speichern','btn.today':'Heute','btn.removefilters':'Filter entfernen','btn.sendmsg':'Nachricht senden','btn.continue':'Weiter','btn.login':'Anmelden',
+    'filter.search':'Suchen...','filter.allcollabs':'Alle Mitarbeiter','filter.allreminders':'Alle Erinnerungen','filter.allmonths':'Alle Monate','filter.sent':'Gesendet','filter.pending':'Ausstehend','filter.none':'Keine',
+    'th.collaborator':'Mitarbeiter','th.title':'Titel','th.date':'Datum','th.time':'Uhrzeit','th.reminder':'Erinnerung','th.status':'Status','th.actions':'Aktionen','th.username':'Benutzername','th.name':'Name','th.email':'E-Mail','th.role':'Rolle','th.recTime':'Uhrzeit','th.recDays':'Tage',
+    'view.grid':'☰ Raster','view.agenda':'≡ Agenda',
+    'modal.event.new':'Neues Ereignis','modal.event.edit':'Ereignis bearbeiten','modal.event.recipient':'Empfänger *','modal.event.eventtitle':'Ereignistitel *','modal.event.desc':'Beschreibung','modal.event.date':'Ereignisdatum *','modal.event.time':'Ereigniszeit *','modal.event.reminder':'Erinnerungsdatum und -uhrzeit','modal.event.reminderHint':'Leer lassen für keine Erinnerung','modal.event.notes':'Zusätzliche Notizen','modal.event.file':'Anhang','modal.event.reminderSent':'Erinnerung bereits gesendet','modal.event.selectUser':'Benutzer auswählen...','modal.event.titlePh':'Besprechung, Frist...','modal.event.descPh':'Ereignisdetails...','modal.event.notesPh':'Interne Notizen, Referenzen...',
+    'modal.user.new':'Neuer Benutzer','modal.user.edit':'Benutzer bearbeiten','modal.user.username':'Benutzername *','modal.user.fullname':'Vollständiger Name','modal.user.email':'E-Mail *','modal.user.password':'Passwort *','modal.user.passwordHint':'Min. 6 Zeichen','modal.user.role':'Rolle',
+    'role.user':'Benutzer','role.admin':'Administrator',
+    'modal.rec.new':'Neue wiederkehrende Benachrichtigung','modal.rec.edit':'Benachrichtigung bearbeiten','modal.rec.title':'Benachrichtigungstitel *','modal.rec.message':'E-Mail-Nachricht','modal.rec.email':'Empfänger-E-Mail *','modal.rec.time':'Uhrzeit *','modal.rec.freq':'Häufigkeit',
+    'freq.daily':'Täglich','freq.weekdays':'Werktage (Mo-Fr)','freq.weekend':'Wochenende (Sa-So)','freq.custom':'Benutzerdefiniert','rec.choosedays':'Tage auswählen',
+    'days.mon':'Mo','days.tue':'Di','days.wed':'Mi','days.thu':'Do','days.fri':'Fr','days.sat':'Sa','days.sun':'So',
+    'ws.title':'Arbeitsbereich auswählen','ws.wsname':'Arbeitsbereichsname','ws.wspass':'Arbeitsbereichspasswort','ws.continue':'Weiter','ws.help':'Hilfe benötigt? Kontaktieren Sie uns',
+    'login.subtitle':'Bei Ihrem Konto anmelden','login.username':'Benutzername','login.password':'Passwort','login.usernamePh':'Ihr Benutzername','login.submit':'Anmelden','login.back':'← Arbeitsbereich wechseln',
+    'contact.pre.title':'Kontakt','contact.pre.subtitle':'Wir antworten per E-Mail','contact.pre.back':'← Zurück',
+    'contact.name':'Name','contact.namePh':'Ihr Name','contact.email':'E-Mail','contact.emailPh':'Ihre E-Mail','contact.message':'Nachricht','contact.messagePh':'Schreiben Sie Ihre Nachricht...','contact.send':'Nachricht senden','contact.cardtitle':'Nachricht senden',
+    'js.deleteEvent':'Dieses Ereignis löschen?','js.fieldRequired':'Wählen Sie einen Empfänger und füllen Sie alle Pflichtfelder aus (*)','js.sendReminder':'Erinnerung senden an','js.emailSent':'E-Mail gesendet an','js.noEvents':'Keine Ereignisse gefunden','js.results':'Ergebnisse','js.today':'Heute','js.noUpcoming':'Keine Ereignisse in den nächsten 7 Tagen',
+    'badge.sent':'Gesendet','badge.pending':'Ausstehend','badge.none':'Keine',
+    'stat.total':'Ereignisse gesamt','stat.today':'Heute','stat.week':'Diese Woche','stat.pending':'Ausstehend',
+    'agenda.empty':'Keine Ereignisse im',
+    months:['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+    daysFull:['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
+  },
+  pt:{
+    'nav.dashboard':'Painel','nav.events':'Eventos','nav.calendar':'Calendário','nav.users':'Utilizadores','nav.contact':'Contacto','nav.recurring':'Recorrentes','nav.logout':'Sair',
+    'sidebar.tagline':'Gestão Empresarial',
+    'page.dashboard.title':'Visão geral','page.dashboard.subtitle':'Tudo sob controlo, de relance.','page.dashboard.upcoming':'Próximos 7 dias','page.dashboard.topcollab':'Top colaboradores',
+    'page.events.title':'Gestão de Eventos','page.events.subtitle':'Crie e gira lembretes para os seus colaboradores.',
+    'page.calendar.title':'Calendário','page.calendar.subtitle':'Visualize os eventos ao longo do tempo.',
+    'page.users.title':'Gestão de Utilizadores','page.users.subtitle':'Administre os acessos ao sistema.',
+    'page.contact.title':'Contacte-nos','page.contact.subtitle':'Escreva-nos, responderemos o mais brevemente possível.',
+    'page.recurring.title':'Notificações Recorrentes','page.recurring.subtitle':'Emails automáticos enviados diariamente à hora escolhida.',
+    'page.recurring.info':'As notificações recorrentes são enviadas automaticamente cada minuto — mesmo com a app fechada.',
+    'btn.exportcsv':'Exportar CSV','btn.newevent':'+ Novo evento','btn.newuser':'+ Novo utilizador','btn.newnotif':'+ Nova notificação','btn.cancel':'Cancelar','btn.save':'Guardar','btn.today':'Hoje','btn.removefilters':'Remover filtros','btn.sendmsg':'Enviar mensagem','btn.continue':'Continuar','btn.login':'Entrar',
+    'filter.search':'Pesquisar...','filter.allcollabs':'Todos os colaboradores','filter.allreminders':'Todos os lembretes','filter.allmonths':'Todos os meses','filter.sent':'Enviado','filter.pending':'Pendente','filter.none':'Nenhum',
+    'th.collaborator':'Colaborador','th.title':'Título','th.date':'Data','th.time':'Hora','th.reminder':'Lembrete','th.status':'Estado','th.actions':'Ações','th.username':'Utilizador','th.name':'Nome','th.email':'Email','th.role':'Função','th.recTime':'Horário','th.recDays':'Dias',
+    'view.grid':'☰ Grelha','view.agenda':'≡ Agenda',
+    'modal.event.new':'Novo evento','modal.event.edit':'Editar evento','modal.event.recipient':'Destinatário *','modal.event.eventtitle':'Título do evento *','modal.event.desc':'Descrição','modal.event.date':'Data do evento *','modal.event.time':'Hora do evento *','modal.event.reminder':'Data e hora do lembrete','modal.event.reminderHint':'Deixar vazio para sem lembrete','modal.event.notes':'Notas adicionais','modal.event.file':'Anexo','modal.event.reminderSent':'Lembrete já enviado','modal.event.selectUser':'Selecionar utilizador...','modal.event.titlePh':'Reunião, Prazo...','modal.event.descPh':'Detalhes do evento...','modal.event.notesPh':'Notas internas, referências...',
+    'modal.user.new':'Novo utilizador','modal.user.edit':'Editar utilizador','modal.user.username':'Utilizador *','modal.user.fullname':'Nome completo','modal.user.email':'Email *','modal.user.password':'Palavra-passe *','modal.user.passwordHint':'Mín. 6 caracteres','modal.user.role':'Função',
+    'role.user':'Utilizador','role.admin':'Administrador',
+    'modal.rec.new':'Nova notificação recorrente','modal.rec.edit':'Editar notificação recorrente','modal.rec.title':'Título da notificação *','modal.rec.message':'Mensagem email','modal.rec.email':'Email destinatário *','modal.rec.time':'Horário *','modal.rec.freq':'Frequência',
+    'freq.daily':'Cada dia','freq.weekdays':'Dias úteis (Seg-Sex)','freq.weekend':'Fim de semana (Sáb-Dom)','freq.custom':'Personalizado','rec.choosedays':'Escolher dias',
+    'days.mon':'Seg','days.tue':'Ter','days.wed':'Qua','days.thu':'Qui','days.fri':'Sex','days.sat':'Sáb','days.sun':'Dom',
+    'ws.title':'Selecionar espaço de trabalho','ws.wsname':'Nome do espaço','ws.wspass':'Palavra-passe do espaço','ws.continue':'Continuar','ws.help':'Precisa de ajuda? Contacte-nos',
+    'login.subtitle':'Aceda à sua conta','login.username':'Utilizador','login.password':'Palavra-passe','login.usernamePh':'O seu utilizador','login.submit':'Entrar','login.back':'← Mudar espaço de trabalho',
+    'contact.pre.title':'Contacte-nos','contact.pre.subtitle':'Responderemos por email','contact.pre.back':'← Voltar',
+    'contact.name':'Nome','contact.namePh':'O seu nome','contact.email':'Email','contact.emailPh':'O seu email','contact.message':'Mensagem','contact.messagePh':'Escreva a sua mensagem...','contact.send':'Enviar mensagem','contact.cardtitle':'Enviar uma mensagem',
+    'js.deleteEvent':'Eliminar este evento?','js.fieldRequired':'Selecione um destinatário e preencha todos os campos (*)','js.sendReminder':'Enviar lembrete para','js.emailSent':'Email enviado para','js.noEvents':'Nenhum evento encontrado','js.results':'resultados','js.today':'Hoje','js.noUpcoming':'Nenhum evento nos próximos 7 dias',
+    'badge.sent':'Enviado','badge.pending':'Pendente','badge.none':'Nenhum',
+    'stat.total':'Total de eventos','stat.today':'Hoje','stat.week':'Esta semana','stat.pending':'Pendente',
+    'agenda.empty':'Nenhum evento em',
+    months:['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+    daysFull:['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'],
+  },
+  nl:{
+    'nav.dashboard':'Dashboard','nav.events':'Evenementen','nav.calendar':'Kalender','nav.users':'Gebruikers','nav.contact':'Contact','nav.recurring':'Terugkerend','nav.logout':'Uitloggen',
+    'sidebar.tagline':'Bedrijfsbeheer',
+    'page.dashboard.title':'Overzicht','page.dashboard.subtitle':'Alles onder controle, in één oogopslag.','page.dashboard.upcoming':'Komende 7 dagen','page.dashboard.topcollab':'Top medewerkers',
+    'page.events.title':'Evenementenbeheer','page.events.subtitle':'Maak herinneringen voor uw medewerkers.',
+    'page.calendar.title':'Kalender','page.calendar.subtitle':'Bekijk evenementen in de tijd.',
+    'page.users.title':'Gebruikersbeheer','page.users.subtitle':'Beheer systeemtoegang.',
+    'page.contact.title':'Contact','page.contact.subtitle':'Schrijf ons, we reageren zo snel mogelijk.',
+    'page.recurring.title':'Terugkerende Meldingen','page.recurring.subtitle':'Automatische emails dagelijks op het gekozen tijdstip.',
+    'page.recurring.info':'Terugkerende meldingen worden elke minuut automatisch verzonden — ook als de app gesloten is.',
+    'btn.exportcsv':'CSV exporteren','btn.newevent':'+ Nieuw evenement','btn.newuser':'+ Nieuwe gebruiker','btn.newnotif':'+ Nieuwe melding','btn.cancel':'Annuleren','btn.save':'Opslaan','btn.today':'Vandaag','btn.removefilters':'Filters verwijderen','btn.sendmsg':'Bericht sturen','btn.continue':'Doorgaan','btn.login':'Inloggen',
+    'filter.search':'Zoeken...','filter.allcollabs':'Alle medewerkers','filter.allreminders':'Alle herinneringen','filter.allmonths':'Alle maanden','filter.sent':'Verzonden','filter.pending':'In afwachting','filter.none':'Geen',
+    'th.collaborator':'Medewerker','th.title':'Titel','th.date':'Datum','th.time':'Tijd','th.reminder':'Herinnering','th.status':'Status','th.actions':'Acties','th.username':'Gebruikersnaam','th.name':'Naam','th.email':'Email','th.role':'Rol','th.recTime':'Tijd','th.recDays':'Dagen',
+    'view.grid':'☰ Raster','view.agenda':'≡ Agenda',
+    'modal.event.new':'Nieuw evenement','modal.event.edit':'Evenement bewerken','modal.event.recipient':'Ontvanger *','modal.event.eventtitle':'Evenementtitel *','modal.event.desc':'Beschrijving','modal.event.date':'Evenementdatum *','modal.event.time':'Evenementtijd *','modal.event.reminder':'Herinnerdatum en -tijd','modal.event.reminderHint':'Leeg laten voor geen herinnering','modal.event.notes':'Extra notities','modal.event.file':'Bijlage','modal.event.reminderSent':'Herinnering al verzonden','modal.event.selectUser':'Gebruiker selecteren...','modal.event.titlePh':'Vergadering, Deadline...','modal.event.descPh':'Evenementdetails...','modal.event.notesPh':'Interne notities, referenties...',
+    'modal.user.new':'Nieuwe gebruiker','modal.user.edit':'Gebruiker bewerken','modal.user.username':'Gebruikersnaam *','modal.user.fullname':'Volledige naam','modal.user.email':'Email *','modal.user.password':'Wachtwoord *','modal.user.passwordHint':'Min. 6 tekens','modal.user.role':'Rol',
+    'role.user':'Gebruiker','role.admin':'Beheerder',
+    'modal.rec.new':'Nieuwe terugkerende melding','modal.rec.edit':'Melding bewerken','modal.rec.title':'Meldingstitel *','modal.rec.message':'E-mailbericht','modal.rec.email':'E-mail ontvanger *','modal.rec.time':'Tijd *','modal.rec.freq':'Frequentie',
+    'freq.daily':'Elke dag','freq.weekdays':'Werkdagen (Ma-Vr)','freq.weekend':'Weekend (Za-Zo)','freq.custom':'Aangepast','rec.choosedays':'Dagen kiezen',
+    'days.mon':'Ma','days.tue':'Di','days.wed':'Wo','days.thu':'Do','days.fri':'Vr','days.sat':'Za','days.sun':'Zo',
+    'ws.title':'Werkruimte selecteren','ws.wsname':'Naam werkruimte','ws.wspass':'Wachtwoord werkruimte','ws.continue':'Doorgaan','ws.help':'Hulp nodig? Neem contact op',
+    'login.subtitle':'Log in op uw account','login.username':'Gebruikersnaam','login.password':'Wachtwoord','login.usernamePh':'Uw gebruikersnaam','login.submit':'Inloggen','login.back':'← Werkruimte wijzigen',
+    'contact.pre.title':'Contact','contact.pre.subtitle':'We reageren via email','contact.pre.back':'← Terug',
+    'contact.name':'Naam','contact.namePh':'Uw naam','contact.email':'Email','contact.emailPh':'Uw email','contact.message':'Bericht','contact.messagePh':'Schrijf uw bericht...','contact.send':'Bericht sturen','contact.cardtitle':'Een bericht sturen',
+    'js.deleteEvent':'Dit evenement verwijderen?','js.fieldRequired':'Selecteer een ontvanger en vul alle verplichte velden in (*)','js.sendReminder':'Herinnering sturen naar','js.emailSent':'Email verzonden naar','js.noEvents':'Geen evenementen gevonden','js.results':'resultaten','js.today':'Vandaag','js.noUpcoming':'Geen evenementen in de komende 7 dagen',
+    'badge.sent':'Verzonden','badge.pending':'In afwachting','badge.none':'Geen',
+    'stat.total':'Totaal evenementen','stat.today':'Vandaag','stat.week':'Deze week','stat.pending':'In afwachting',
+    'agenda.empty':'Geen evenementen in',
+    months:['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'],
+    daysFull:['Zondag','Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag'],
+  },
+  pl:{
+    'nav.dashboard':'Panel','nav.events':'Zdarzenia','nav.calendar':'Kalendarz','nav.users':'Użytkownicy','nav.contact':'Kontakt','nav.recurring':'Cykliczne','nav.logout':'Wyloguj',
+    'sidebar.tagline':'Zarządzanie Firmą',
+    'page.dashboard.title':'Przegląd','page.dashboard.subtitle':'Wszystko pod kontrolą, jednym spojrzeniem.','page.dashboard.upcoming':'Następne 7 dni','page.dashboard.topcollab':'Najlepsi współpracownicy',
+    'page.events.title':'Zarządzanie Zdarzeniami','page.events.subtitle':'Twórz i zarządzaj przypomnieniami dla współpracowników.',
+    'page.calendar.title':'Kalendarz','page.calendar.subtitle':'Przeglądaj zdarzenia w czasie.',
+    'page.users.title':'Zarządzanie Użytkownikami','page.users.subtitle':'Zarządzaj dostępem do systemu.',
+    'page.contact.title':'Kontakt','page.contact.subtitle':'Napisz do nas, odpowiemy jak najszybciej.',
+    'page.recurring.title':'Powiadomienia Cykliczne','page.recurring.subtitle':'Automatyczne emaile wysyłane codziennie o wybranej godzinie.',
+    'page.recurring.info':'Powiadomienia cykliczne są wysyłane automatycznie co minutę — nawet gdy aplikacja jest zamknięta.',
+    'btn.exportcsv':'Eksportuj CSV','btn.newevent':'+ Nowe zdarzenie','btn.newuser':'+ Nowy użytkownik','btn.newnotif':'+ Nowe powiadomienie','btn.cancel':'Anuluj','btn.save':'Zapisz','btn.today':'Dziś','btn.removefilters':'Usuń filtry','btn.sendmsg':'Wyślij wiadomość','btn.continue':'Dalej','btn.login':'Zaloguj',
+    'filter.search':'Szukaj...','filter.allcollabs':'Wszyscy współpracownicy','filter.allreminders':'Wszystkie przypomnienia','filter.allmonths':'Wszystkie miesiące','filter.sent':'Wysłano','filter.pending':'Oczekujące','filter.none':'Brak',
+    'th.collaborator':'Współpracownik','th.title':'Tytuł','th.date':'Data','th.time':'Czas','th.reminder':'Przypomnienie','th.status':'Status','th.actions':'Akcje','th.username':'Użytkownik','th.name':'Imię','th.email':'Email','th.role':'Rola','th.recTime':'Czas','th.recDays':'Dni',
+    'view.grid':'☰ Siatka','view.agenda':'≡ Agenda',
+    'modal.event.new':'Nowe zdarzenie','modal.event.edit':'Edytuj zdarzenie','modal.event.recipient':'Odbiorca *','modal.event.eventtitle':'Tytuł zdarzenia *','modal.event.desc':'Opis','modal.event.date':'Data zdarzenia *','modal.event.time':'Czas zdarzenia *','modal.event.reminder':'Data i czas przypomnienia','modal.event.reminderHint':'Zostaw puste dla braku przypomnienia','modal.event.notes':'Dodatkowe uwagi','modal.event.file':'Załącznik','modal.event.reminderSent':'Przypomnienie już wysłane','modal.event.selectUser':'Wybierz użytkownika...','modal.event.titlePh':'Spotkanie, Termin...','modal.event.descPh':'Szczegóły zdarzenia...','modal.event.notesPh':'Notatki wewnętrzne, odniesienia...',
+    'modal.user.new':'Nowy użytkownik','modal.user.edit':'Edytuj użytkownika','modal.user.username':'Użytkownik *','modal.user.fullname':'Pełne imię i nazwisko','modal.user.email':'Email *','modal.user.password':'Hasło *','modal.user.passwordHint':'Min. 6 znaków','modal.user.role':'Rola',
+    'role.user':'Użytkownik','role.admin':'Administrator',
+    'modal.rec.new':'Nowe powiadomienie cykliczne','modal.rec.edit':'Edytuj powiadomienie cykliczne','modal.rec.title':'Tytuł powiadomienia *','modal.rec.message':'Wiadomość email','modal.rec.email':'Email odbiorcy *','modal.rec.time':'Czas *','modal.rec.freq':'Częstotliwość',
+    'freq.daily':'Codziennie','freq.weekdays':'Dni robocze (Pon-Pt)','freq.weekend':'Weekend (Sob-Nd)','freq.custom':'Niestandardowy','rec.choosedays':'Wybierz dni',
+    'days.mon':'Pon','days.tue':'Wt','days.wed':'Śr','days.thu':'Czw','days.fri':'Pt','days.sat':'Sob','days.sun':'Nd',
+    'ws.title':'Wybierz przestrzeń roboczą','ws.wsname':'Nazwa przestrzeni','ws.wspass':'Hasło przestrzeni','ws.continue':'Dalej','ws.help':'Potrzebujesz pomocy? Skontaktuj się',
+    'login.subtitle':'Zaloguj się do konta','login.username':'Użytkownik','login.password':'Hasło','login.usernamePh':'Twoja nazwa użytkownika','login.submit':'Zaloguj','login.back':'← Zmień przestrzeń roboczą',
+    'contact.pre.title':'Kontakt','contact.pre.subtitle':'Odpowiemy emailem','contact.pre.back':'← Powrót',
+    'contact.name':'Imię','contact.namePh':'Twoje imię','contact.email':'Email','contact.emailPh':'Twój email','contact.message':'Wiadomość','contact.messagePh':'Napisz swoją wiadomość...','contact.send':'Wyślij wiadomość','contact.cardtitle':'Wyślij wiadomość',
+    'js.deleteEvent':'Usunąć to zdarzenie?','js.fieldRequired':'Wybierz odbiorcę i wypełnij wszystkie wymagane pola (*)','js.sendReminder':'Wyślij przypomnienie do','js.emailSent':'Email wysłany do','js.noEvents':'Nie znaleziono zdarzeń','js.results':'wyniki','js.today':'Dziś','js.noUpcoming':'Brak zdarzeń w ciągu następnych 7 dni',
+    'badge.sent':'Wysłano','badge.pending':'Oczekujące','badge.none':'Brak',
+    'stat.total':'Łączna liczba zdarzeń','stat.today':'Dziś','stat.week':'Ten tydzień','stat.pending':'Oczekujące',
+    'agenda.empty':'Brak zdarzeń w',
+    months:['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'],
+    daysFull:['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota'],
+  },
+  ru:{
+    'nav.dashboard':'Панель','nav.events':'События','nav.calendar':'Календарь','nav.users':'Пользователи','nav.contact':'Контакты','nav.recurring':'Повторяющиеся','nav.logout':'Выход',
+    'sidebar.tagline':'Управление Бизнесом',
+    'page.dashboard.title':'Обзор','page.dashboard.subtitle':'Всё под контролем, с первого взгляда.','page.dashboard.upcoming':'Следующие 7 дней','page.dashboard.topcollab':'Лучшие сотрудники',
+    'page.events.title':'Управление Событиями','page.events.subtitle':'Создавайте и управляйте напоминаниями для сотрудников.',
+    'page.calendar.title':'Календарь','page.calendar.subtitle':'Просматривайте события во времени.',
+    'page.users.title':'Управление Пользователями','page.users.subtitle':'Управляйте доступом к системе.',
+    'page.contact.title':'Связаться с нами','page.contact.subtitle':'Напишите нам, ответим как можно скорее.',
+    'page.recurring.title':'Повторяющиеся Уведомления','page.recurring.subtitle':'Автоматические письма ежедневно в выбранное время.',
+    'page.recurring.info':'Повторяющиеся уведомления отправляются автоматически каждую минуту — даже когда приложение закрыто.',
+    'btn.exportcsv':'Экспорт CSV','btn.newevent':'+ Новое событие','btn.newuser':'+ Новый пользователь','btn.newnotif':'+ Новое уведомление','btn.cancel':'Отмена','btn.save':'Сохранить','btn.today':'Сегодня','btn.removefilters':'Убрать фильтры','btn.sendmsg':'Отправить сообщение','btn.continue':'Продолжить','btn.login':'Войти',
+    'filter.search':'Поиск...','filter.allcollabs':'Все сотрудники','filter.allreminders':'Все напоминания','filter.allmonths':'Все месяцы','filter.sent':'Отправлено','filter.pending':'Ожидание','filter.none':'Нет',
+    'th.collaborator':'Сотрудник','th.title':'Название','th.date':'Дата','th.time':'Время','th.reminder':'Напоминание','th.status':'Статус','th.actions':'Действия','th.username':'Имя пользователя','th.name':'Имя','th.email':'Email','th.role':'Роль','th.recTime':'Время','th.recDays':'Дни',
+    'view.grid':'☰ Сетка','view.agenda':'≡ Повестка',
+    'modal.event.new':'Новое событие','modal.event.edit':'Редактировать событие','modal.event.recipient':'Получатель *','modal.event.eventtitle':'Название события *','modal.event.desc':'Описание','modal.event.date':'Дата события *','modal.event.time':'Время события *','modal.event.reminder':'Дата и время напоминания','modal.event.reminderHint':'Оставьте пустым для отсутствия напоминания','modal.event.notes':'Дополнительные заметки','modal.event.file':'Вложение','modal.event.reminderSent':'Напоминание уже отправлено','modal.event.selectUser':'Выберите пользователя...','modal.event.titlePh':'Встреча, Дедлайн...','modal.event.descPh':'Детали события...','modal.event.notesPh':'Внутренние заметки, ссылки...',
+    'modal.user.new':'Новый пользователь','modal.user.edit':'Редактировать пользователя','modal.user.username':'Имя пользователя *','modal.user.fullname':'Полное имя','modal.user.email':'Email *','modal.user.password':'Пароль *','modal.user.passwordHint':'Мин. 6 символов','modal.user.role':'Роль',
+    'role.user':'Пользователь','role.admin':'Администратор',
+    'modal.rec.new':'Новое повторяющееся уведомление','modal.rec.edit':'Редактировать уведомление','modal.rec.title':'Название уведомления *','modal.rec.message':'Текст письма','modal.rec.email':'Email получателя *','modal.rec.time':'Время *','modal.rec.freq':'Частота',
+    'freq.daily':'Каждый день','freq.weekdays':'Будние дни (Пн-Пт)','freq.weekend':'Выходные (Сб-Вс)','freq.custom':'Пользовательский','rec.choosedays':'Выбрать дни',
+    'days.mon':'Пн','days.tue':'Вт','days.wed':'Ср','days.thu':'Чт','days.fri':'Пт','days.sat':'Сб','days.sun':'Вс',
+    'ws.title':'Выбрать рабочее пространство','ws.wsname':'Название пространства','ws.wspass':'Пароль пространства','ws.continue':'Продолжить','ws.help':'Нужна помощь? Свяжитесь с нами',
+    'login.subtitle':'Войдите в свой аккаунт','login.username':'Имя пользователя','login.password':'Пароль','login.usernamePh':'Ваше имя пользователя','login.submit':'Войти','login.back':'← Сменить рабочее пространство',
+    'contact.pre.title':'Связаться с нами','contact.pre.subtitle':'Ответим по email','contact.pre.back':'← Назад',
+    'contact.name':'Имя','contact.namePh':'Ваше имя','contact.email':'Email','contact.emailPh':'Ваш email','contact.message':'Сообщение','contact.messagePh':'Напишите ваше сообщение...','contact.send':'Отправить сообщение','contact.cardtitle':'Отправить сообщение',
+    'js.deleteEvent':'Удалить это событие?','js.fieldRequired':'Выберите получателя и заполните все обязательные поля (*)','js.sendReminder':'Отправить напоминание на','js.emailSent':'Email отправлен на','js.noEvents':'События не найдены','js.results':'результаты','js.today':'Сегодня','js.noUpcoming':'Нет событий в ближайшие 7 дней',
+    'badge.sent':'Отправлено','badge.pending':'Ожидание','badge.none':'Нет',
+    'stat.total':'Всего событий','stat.today':'Сегодня','stat.week':'На этой неделе','stat.pending':'Ожидание',
+    'agenda.empty':'Нет событий в',
+    months:['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+    daysFull:['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'],
+  },
+};
+
+// Normalizza lingua: usa it come fallback se non supportata
+if (!LANGS[currentLang]) currentLang = 'it';
+
+function t(key) { return (LANGS[currentLang]||LANGS.it)[key] || LANGS.it[key] || key; }
+
+function applyLang() {
+  const L = LANGS[currentLang] || LANGS.it;
+  // Aggiorna mesi e giorni usati dal calendario
+  MONTHS.splice(0, 12, ...L.months);
+  DAYS_FULL.splice(0, 7, ...L.daysFull);
+  // Applica data-i18n (textContent)
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = L[el.dataset.i18n]; if (v !== undefined) el.textContent = v;
+  });
+  // Applica data-i18n-ph (placeholder)
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const v = L[el.dataset.i18nPh]; if (v !== undefined) el.placeholder = v;
+  });
+  // Selettori lingua
+  ['lang-select','lang-select-pre'].forEach(id => {
+    const s = document.getElementById(id); if (s) s.value = currentLang;
+  });
+}
+
+function changeLang(lang) {
+  if (!LANGS[lang]) return;
+  currentLang = lang;
+  localStorage.setItem('pa_lang_global', lang);
+  if (currentUser) localStorage.setItem('pa_lang_' + currentUser.username, lang);
+  applyLang();
+  // Ri-renderizza contenuto dinamico
+  if (typeof renderEvents === 'function') { renderEvents(); renderDashboard(); renderCalendar(); }
+}
+
+function changeLangPre(lang) {
+  if (!LANGS[lang]) return;
+  currentLang = lang;
+  localStorage.setItem('pa_lang_global', lang);
+  applyLang();
+}
+
+// Applica subito al caricamento pagina
+document.addEventListener('DOMContentLoaded', () => applyLang());
+
 // ============================================================
 // DATI INIZIALI
 // ============================================================
@@ -1086,7 +1437,7 @@ function renderRecurring() {
 
 function openRecurringModal() {
   recurringEditId = null;
-  document.getElementById('recurring-modal-title').textContent = 'Nuova notifica ricorrente';
+  document.getElementById('recurring-modal-title').textContent = t('modal.rec.new');
   document.getElementById('rec-title').value = '';
   document.getElementById('rec-message').value = '';
   document.getElementById('rec-email').value = currentUser ? (currentUser.email || '') : '';
@@ -1145,7 +1496,7 @@ function editRecurring(id) {
   const r = recurringData.find(x => x.id === id);
   if (!r) return;
   recurringEditId = id;
-  document.getElementById('recurring-modal-title').textContent = 'Modifica notifica';
+  document.getElementById('recurring-modal-title').textContent = t('modal.rec.edit');
   document.getElementById('rec-title').value = r.title;
   document.getElementById('rec-message').value = r.message || '';
   document.getElementById('rec-email').value = r.email;
@@ -1242,37 +1593,37 @@ function renderDashboard() {
   document.getElementById('stats-grid').innerHTML = `
     <div class="stat-card">
       <div class="stat-value gold">${total}</div>
-      <div class="stat-label">Totale eventi</div>
+      <div class="stat-label" data-i18n="stat.total">Totale eventi</div>
       <div class="stat-bar"><div class="stat-bar-fill" style="width:100%"></div></div>
     </div>
     <div class="stat-card">
       <div class="stat-value">${future}</div>
-      <div class="stat-label">Eventi futuri</div>
+      <div class="stat-label">${t('page.dashboard.upcoming')}</div>
       <div class="stat-bar"><div class="stat-bar-fill" style="width:${Math.round(future/maxVal*100)}%"></div></div>
     </div>
     <div class="stat-card">
       <div class="stat-value">${upcoming.length}</div>
-      <div class="stat-label">Prossimi 7 giorni</div>
+      <div class="stat-label">${t('stat.week')}</div>
       <div class="stat-bar"><div class="stat-bar-fill" style="width:${Math.round(upcoming.length/maxVal*100)}%"></div></div>
     </div>
     <div class="stat-card">
       <div class="stat-value">${reminderPending}</div>
-      <div class="stat-label">Promemoria in attesa</div>
+      <div class="stat-label">${t('stat.pending')}</div>
       <div class="stat-bar"><div class="stat-bar-fill" style="width:${Math.round(reminderPending/maxVal*100)}%"></div></div>
     </div>
   `;
 
   const upcomingList = document.getElementById('upcoming-list');
   if (upcoming.length === 0) {
-    upcomingList.innerHTML = '<div class="empty-state"><div class="icon">🎉</div>Nessun evento nei prossimi 7 giorni</div>';
+    upcomingList.innerHTML = `<div class="empty-state"><div class="icon">🎉</div>${t('js.noUpcoming')}</div>`;
   } else {
     upcomingList.innerHTML = upcoming.sort((a,b) => a.event_date.localeCompare(b.event_date)).map(e => `
       <div style="padding:10px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center">
         <div>
           <div style="font-weight:600;font-size:14px">${e.title}</div>
-          <div style="font-size:12px;color:#888">${e.collaborator_name} — ${formatDate(e.event_date)} alle ${e.event_time}</div>
+          <div style="font-size:12px;color:#888">${e.collaborator_name} — ${formatDate(e.event_date)}</div>
         </div>
-        <span class="badge ${e.reminder_sent ? 'badge-success' : 'badge-warning'}">${e.reminder_sent ? 'Inviato' : 'In attesa'}</span>
+        <span class="badge ${e.reminder_sent ? 'badge-success' : 'badge-warning'}">${e.reminder_sent ? t('badge.sent') : t('badge.pending')}</span>
       </div>
     `).join('');
   }
@@ -1347,11 +1698,11 @@ function renderEvents() {
 
   events.sort((a,b) => b.event_date.localeCompare(a.event_date));
 
-  document.getElementById('events-count').textContent = `${events.length} risultati`;
+  document.getElementById('events-count').textContent = `${events.length} ${t('js.results')}`;
 
   const tbody = document.getElementById('events-table');
   if (events.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="icon">📭</div>Nessun evento trovato</div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="icon">📭</div>${t('js.noEvents')}</div></td></tr>`;
     return;
   }
 
@@ -1372,8 +1723,8 @@ function renderEvents() {
       <td style="font-size:12px">${e.reminder_datetime ? formatDateTime(e.reminder_datetime) : '—'}</td>
       <td>
         ${e.reminder_datetime
-          ? `<span class="badge ${e.reminder_sent ? 'badge-success' : 'badge-warning'}">${e.reminder_sent ? 'Inviato' : 'In attesa'}</span>`
-          : `<span class="badge" style="background:#f5f5f5;color:#999">Nessuno</span>`}
+          ? `<span class="badge ${e.reminder_sent ? 'badge-success' : 'badge-warning'}">${e.reminder_sent ? t('badge.sent') : t('badge.pending')}</span>`
+          : `<span class="badge" style="background:#f5f5f5;color:#999">${t('badge.none')}</span>`}
       </td>
       <td style="white-space:nowrap">
         ${e.collaborator_email && !e.reminder_sent ? `<button class="btn btn-sm" style="background:#e65100;color:white;margin-right:4px" onclick="sendManualReminder(${e.id})" title="Invia promemoria ora">📧</button>` : ''}
@@ -1412,7 +1763,7 @@ function openEventModal(id = null) {
   };
   if (id) {
     const e = getEvents().find(ev => ev.id === id);
-    document.getElementById('event-modal-title').textContent = 'Modifica evento';
+    document.getElementById('event-modal-title').textContent = t('modal.event.edit');
     document.getElementById('ev-collab-name').value = e.collaborator_name;
     document.getElementById('ev-collab-email').value = e.collaborator_email;
     // Pre-seleziona utente nella select
@@ -1431,7 +1782,7 @@ function openEventModal(id = null) {
     const fc = document.getElementById('ev-file-current');
     fc.innerHTML = e.file_name ? `📎 <a href="${e.file_url}" target="_blank">${e.file_name}</a>` : '';
   } else {
-    document.getElementById('event-modal-title').textContent = 'Nuovo evento';
+    document.getElementById('event-modal-title').textContent = t('modal.event.new');
     document.getElementById('ev-collab-name').value = '';
     document.getElementById('ev-collab-email').value = '';
     document.getElementById('ev-title').value = '';
@@ -1463,7 +1814,7 @@ async function saveEvent() {
   const time = document.getElementById('ev-time').value;
 
   if (!name || !email || !title || !date || !time) {
-    document.getElementById('event-error').textContent = 'Seleziona un destinatario e compila tutti i campi (*)';
+    document.getElementById('event-error').textContent = t('js.fieldRequired');
     return;
   }
 
@@ -1531,7 +1882,7 @@ async function uploadEventFile(file) {
 }
 
 function deleteEvent(id) {
-  if (!confirm('Eliminare questo evento?')) return;
+  if (!confirm(t('js.deleteEvent'))) return;
   const events = getEvents().filter(e => e.id !== id);
   saveEvents(events);
   deleteEventFromSheets(id);
@@ -1601,7 +1952,7 @@ function renderAgenda() {
     </div>`;
   }
 
-  if (!hasAny) html = `<div class="agenda-empty">📭 Nessun evento in ${MONTHS[month]}</div>`;
+  if (!hasAny) html = `<div class="agenda-empty">📭 ${t('agenda.empty')} ${MONTHS[month]}</div>`;
   document.getElementById('cal-agenda').innerHTML = html;
 }
 
@@ -1715,7 +2066,7 @@ function openUserModal(id = null) {
   document.getElementById('user-error').textContent = '';
   if (id) {
     const u = getUsers().find(u => u.id === id);
-    document.getElementById('user-modal-title').textContent = 'Modifica utente';
+    document.getElementById('user-modal-title').textContent = t('modal.user.edit');
     document.getElementById('usr-username').value = u.username;
     document.getElementById('usr-name').value = u.name || '';
     document.getElementById('usr-email').value = u.email || '';
@@ -1723,7 +2074,7 @@ function openUserModal(id = null) {
     document.getElementById('usr-role').value = u.role;
     document.getElementById('usr-username').disabled = true;
   } else {
-    document.getElementById('user-modal-title').textContent = 'Nuovo utente';
+    document.getElementById('user-modal-title').textContent = t('modal.user.new');
     document.getElementById('usr-username').value = '';
     document.getElementById('usr-name').value = '';
     document.getElementById('usr-email').value = '';
@@ -1876,9 +2227,9 @@ function checkReminders() {
 function sendManualReminder(id) {
   const e = getEvents().find(ev => ev.id === id);
   if (!e) return;
-  if (!confirm(`Inviare promemoria a ${e.collaborator_email}?`)) return;
+  if (!confirm(`${t('js.sendReminder')} ${e.collaborator_email}?`)) return;
   sendReminderEmail(e);
-  alert('Email inviata a ' + e.collaborator_email);
+  alert(t('js.emailSent') + ' ' + e.collaborator_email);
 }
 
 // Invia email tramite Edge Function (Brevo)
@@ -1946,6 +2297,9 @@ window.onload = function() {
   if (user && savedWs) {
     currentUser = user;
     currentWorkspace = parseInt(savedWs);
+    // Carica lingua preferita dell'utente
+    const userLang = localStorage.getItem('pa_lang_' + user.username);
+    if (userLang && LANGS[userLang]) { currentLang = userLang; applyLang(); }
     document.getElementById('workspace-page').style.display = 'none';
     document.getElementById('login-page').style.display = 'none';
     document.getElementById('app').style.display = 'block';
