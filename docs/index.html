@@ -1397,12 +1397,15 @@ function saveUser() {
   }
 
   saveUsers(users);
+  const savedUser = editingUserId ? users.find(u => u.id === editingUserId) : users[users.length - 1];
+  saveUserToSupabase(savedUser).then(() => loadUsersFromSupabase().then(() => renderUsers()));
   closeUserModal();
   renderUsers();
 }
 
 function deleteUser(id) {
   if (!confirm('Eliminare questo utente?')) return;
+  deleteUserFromSupabase(id).then(() => loadUsersFromSupabase().then(() => renderUsers()));
   saveUsers(getUsers().filter(u => u.id !== id));
   renderUsers();
 }
