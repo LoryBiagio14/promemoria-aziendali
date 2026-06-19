@@ -612,20 +612,20 @@ async function loadUsersFromSupabase(workspaceId) {
 }
 
 async function saveUserToSupabase(user, isNew) {
-  try {
-    const wsId = currentWorkspace || parseInt(sessionStorage.getItem('pa_workspace') || '1');
-    const { id, created_at, ...rest } = user;
-    if (isNew) {
-      const payload = { ...rest, workspace_id: wsId };
-      await fetch(`${SUPABASE_URL}/rest/v1/users`, {
-        method: 'POST', headers: sbHeaders(), body: JSON.stringify(payload)
-      });
-    } else {
-      await fetch(`${SUPABASE_URL}/rest/v1/users?id=eq.${id}`, {
-        method: 'PATCH', headers: sbHeaders(), body: JSON.stringify(rest)
-      });
-    }
-  } catch(err) { console.error('Errore salvataggio utente:', err); }
+  const wsId = currentWorkspace || parseInt(sessionStorage.getItem('pa_workspace') || '1');
+  const { id, created_at, ...rest } = user;
+  if (isNew) {
+    const payload = { ...rest, workspace_id: wsId };
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/users`, {
+      method: 'POST', headers: sbHeaders(), body: JSON.stringify(payload)
+    });
+    if (!res.ok) { const err = await res.text(); alert('Errore salvataggio: ' + err); }
+  } else {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/users?id=eq.${id}`, {
+      method: 'PATCH', headers: sbHeaders(), body: JSON.stringify(rest)
+    });
+    if (!res.ok) { const err = await res.text(); alert('Errore modifica: ' + err); }
+  }
 }
 
 async function deleteUserFromSupabase(id) {
